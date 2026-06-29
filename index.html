@@ -275,6 +275,14 @@
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
+  /* ── Botón compartir (fijo arriba derecha) ── */
+  .share-fab { position: fixed; top: max(0.85rem, env(safe-area-inset-top)); right: 0.9rem; z-index: 950;
+    width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.22); color: #fff; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: background .15s; }
+  .share-fab:hover { background: rgba(255,255,255,0.22); }
+  .share-fab svg { width: 17px; height: 17px; }
+
   /* ── Calma overlay ── */
   .calma-sheet { text-align: center; }
   .calma-emoji { font-size: 2.8rem; margin-bottom: 0.5rem; }
@@ -297,7 +305,7 @@
   <header class="hero">
     <div class="logo-box"><img src="logo.png" alt="Silva Salud"></div>
     <h1>Silva Salud</h1>
-    <p>Ante el terremoto en Caracas, te acompañamos a manejar tu ansiedad, el estrés y el agotamiento. Tocá cómo te sentís y EVA te asistirá de inmediato.</p>
+    <p>Ante el terremoto en Caracas, te acompañamos a manejar tu ansiedad, el estrés y el agotamiento. Tocá cómo te sentís y recibirás orientación de inmediato.</p>
   </header>
 
   <div class="portal-name" id="portalName">Hola</div>
@@ -344,11 +352,19 @@
     </button>
 
     <div class="fbrand">AEROAMBULANCIA SILVA</div>
-    <div class="fnote">Portal de Apoyo Emocional · Crisis Sísmica Caracas · IA EVA</div>
+    <div class="fnote">Portal de Apoyo Emocional · Crisis Sísmica Caracas</div>
     <span class="ver" id="verTag">Versión 1.0</span>
   </footer>
 
 </div>
+
+<!-- Botón compartir -->
+<button class="share-fab" onclick="compartirPortal()" title="Compartir este portal">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+  </svg>
+</button>
 
 <!-- Consentimiento (primera vez) -->
 <div class="overlay" id="consent">
@@ -367,8 +383,8 @@
 <!-- Setup overlay -->
 <div class="overlay" id="setup">
   <div class="sheet">
-    <h2 id="setupTitle">Bienvenido 👋</h2>
-    <p class="lead" id="setupLead">Antes de empezar, completá tus datos. Quedan guardados en este dispositivo y se usan para identificarte ante EVA en cada reporte.</p>
+    <h2 id="setupTitle">Bienvenido</h2>
+    <p class="lead" id="setupLead">Antes de empezar, completá tus datos. Quedan guardados en este dispositivo y se usan para identificarte en cada reporte.</p>
     <div class="field" id="fName">
       <label for="inName">Nombre y apellido</label>
       <input id="inName" type="text" autocomplete="name" placeholder="Ej: Juan Pérez" maxlength="60">
@@ -380,18 +396,16 @@
       <div class="err">Por favor ingresá tu número de cédula.</div>
     </div>
     <div class="field" id="fEmp">
-      <label for="inEmp">Empresa</label>
-      <input id="inEmp" type="text" autocomplete="organization" placeholder="Ej: Aerolíneas del Sur" maxlength="60">
-      <div class="err">Por favor ingresá tu empresa.</div>
+      <label for="inEmp">Empresa / Institución <span style="font-weight:400;color:#888">(opcional)</span></label>
+      <input id="inEmp" type="text" autocomplete="organization" placeholder="Ej: Hospital Central" maxlength="60">
     </div>
     <div class="field" id="fDep">
-      <label for="inDep">Departamento</label>
-      <input id="inDep" type="text" autocomplete="off" placeholder="Ej: Operaciones de Vuelo" maxlength="60">
-      <div class="err">Por favor ingresá tu departamento.</div>
+      <label for="inDep">Departamento / Área <span style="font-weight:400;color:#888">(opcional)</span></label>
+      <input id="inDep" type="text" autocomplete="off" placeholder="Ej: Urgencias" maxlength="60">
     </div>
     <div class="field" id="fCargo">
-      <label for="inCargo">Cargo</label>
-      <input id="inCargo" type="text" autocomplete="organization-title" placeholder="Ej: Piloto" maxlength="60">
+      <label for="inCargo">Cargo / Rol <span style="font-weight:400;color:#888">(opcional)</span></label>
+      <input id="inCargo" type="text" autocomplete="organization-title" placeholder="Ej: Médico" maxlength="60">
     </div>
     <div class="field" id="fSexo">
       <label for="inSexo">Sexo</label>
@@ -416,7 +430,7 @@
     </div>
     <button class="save-btn" onclick="saveProfile()">Guardar y continuar</button>
     <button class="cancel-btn" id="cancelBtn" onclick="closeSetup()" style="display:none;">Cancelar</button>
-    <p class="privacy">🔒 Tus datos no se envían a ningún servidor. Se guardan solo en tu teléfono.</p>
+    <p class="privacy">Tus datos no se envían a ningún servidor externo. Se guardan solo en este dispositivo.</p>
   </div>
 </div>
 
@@ -467,7 +481,6 @@
 <!-- Overlay de calma (post-test / post-tap) -->
 <div class="overlay" id="calmaOverlay">
   <div class="sheet calma-sheet">
-    <div class="calma-emoji">💙</div>
     <h2 id="calmaTitle" style="font-size:1.15rem;margin-bottom:0.3rem">Un momento</h2>
     <p class="calma-msg" id="calmaMsg"></p>
     <div class="breath-wrap">
@@ -941,8 +954,8 @@ const PERELLI_STEPS = [
     colors:['#1aa672','#5fb84a','#e8c400','#f0930f','#e0322f']
   },
   {
-    type:'multi', question:'¿Qué factores han contribuido más a tu fatiga actual? Elige uno o varios.',
-    options:['Horario de trabajo irregular','Vuelos nocturnos','Cambios de huso horario','Alta carga de trabajo','Estrés operacional','Factores personales o familiares','Condiciones ambientales (ruido, turbulencia)','Otros'],
+    type:'multi', question:'¿Qué factores han contribuido más a tu fatiga actual? Elegí uno o varios.',
+    options:['Horario de trabajo irregular','Noches sin dormir bien','Incertidumbre y miedo continuo','Alta carga de trabajo','Estrés por la crisis','Factores personales o familiares','Entorno ruidoso o incómodo','Otros'],
     otrosIdx:7
   },
   {
@@ -1452,10 +1465,10 @@ function openSetup(isEdit){
   document.getElementById('inSexo').value     = p.sexo        || '';
   document.getElementById('inEdad').value     = p.edad        || '';
   document.getElementById('inTelefono').value = p.telefono    || '';
-  document.getElementById('setupTitle').textContent = isEdit ? 'Editar mis datos' : 'Bienvenido 👋';
+  document.getElementById('setupTitle').textContent = isEdit ? 'Editar mis datos' : 'Bienvenido';
   document.getElementById('setupLead').textContent = isEdit
     ? 'Actualizá tus datos. Se aplicarán a tus próximos reportes.'
-    : 'Antes de empezar, completá tus datos. Quedan guardados en este dispositivo y se usan para identificarte ante EVA en cada reporte.';
+    : 'Antes de empezar, completá tus datos. Quedan guardados en este dispositivo y se usan para identificarte en cada reporte.';
   document.getElementById('cancelBtn').style.display = isEdit ? 'block' : 'none';
   ['fName','fCed','fEmp','fDep','fCargo','fSexo','fEdad','fTelefono'].forEach(id => document.getElementById(id).classList.remove('invalid'));
   document.getElementById('setup').classList.add('show');
@@ -1474,9 +1487,6 @@ function saveProfile(){
   let ok = true;
   document.getElementById('fName').classList.toggle('invalid', !nombre); if(!nombre) ok=false;
   document.getElementById('fCed').classList.toggle('invalid', !cedula); if(!cedula) ok=false;
-  document.getElementById('fEmp').classList.toggle('invalid', !empresa); if(!empresa) ok=false;
-  document.getElementById('fDep').classList.toggle('invalid', !departamento); if(!departamento) ok=false;
-  document.getElementById('fCargo').classList.toggle('invalid', !cargo); if(!cargo) ok=false;
   document.getElementById('fSexo').classList.toggle('invalid', !sexo); if(!sexo) ok=false;
   document.getElementById('fEdad').classList.toggle('invalid', !edad); if(!edad) ok=false;
   document.getElementById('fTelefono').classList.toggle('invalid', !telefono); if(!telefono) ok=false;
@@ -1486,6 +1496,22 @@ function saveProfile(){
   renderSections();           // re-genera hrefs con datos nuevos
   closeSetup();
   showToast(editing ? 'Datos actualizados' : '¡Listo! Ya podés reportar');
+}
+
+/* ════════════════ COMPARTIR ════════════════ */
+async function compartirPortal(){
+  const url  = 'https://sintomas.aeroambulanciasilva.com';
+  const text = 'Portal de apoyo emocional ante la crisis sísmica de Caracas. Evaluá tu estado y recibí orientación de inmediato.';
+  if (navigator.share){
+    try { await navigator.share({ title: 'Silva Salud · Apoyo Sísmico', text, url }); } catch(e){}
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast('Enlace copiado al portapapeles');
+  } catch(e){
+    showToast('Compartí este enlace: ' + url);
+  }
 }
 
 /* ════════════════ TOAST ════════════════ */
@@ -1543,7 +1569,7 @@ renderSections();
 if (_prof) paintProfile();
 
 // Perfil completo = tiene todos los campos obligatorios (incluye cédula)
-const _complete = _prof && _prof.nombre && _prof.cedula && _prof.empresa && _prof.departamento && _prof.cargo;
+const _complete = _prof && _prof.nombre && _prof.cedula;
 
 // Forzar consentimiento + carga de datos a quien no esté completo (incluye usuarios viejos)
 if (!_complete){
