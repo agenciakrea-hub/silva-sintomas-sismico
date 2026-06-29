@@ -302,6 +302,25 @@
 
   <div class="portal-name" id="portalName">Hola</div>
 
+  <section class="section" style="animation:fadeUp .4s ease .05s both;margin-bottom:1.4rem">
+    <div class="sec-head">
+      <div class="sec-title"><span class="dot" style="background:#2d6cdf;box-shadow:0 0 0 4px rgba(45,108,223,0.15)"></span>Recursos de Emergencia</div>
+      <div class="sec-sub">Buscá información sobre personas afectadas</div>
+    </div>
+    <div class="stack">
+      <a class="rbtn" href="https://hospitalesenvenezuela.com/" target="_blank" rel="noopener">
+        <div class="ic" style="background:#e7eefb;color:#2d6cdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6M12 9v6"/></svg></div>
+        <div class="tx"><span class="tt">Familiares en hospitales</span><span class="ds">hospitalesenvenezuela.com</span></div>
+        <div class="st"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+      </a>
+      <a class="rbtn" href="https://redayudavenezuela.com/" target="_blank" rel="noopener">
+        <div class="ic" style="background:#f0ebfa;color:#7c5cc4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <div class="tx"><span class="tt">Personas desaparecidas</span><span class="ds">redayudavenezuela.com</span></div>
+        <div class="st"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+      </a>
+    </div>
+  </section>
+
   <main id="sections"></main>
 
 
@@ -390,7 +409,7 @@
       <span class="err">Campo requerido</span>
     </div>
     <div class="field" id="fTelefono">
-      <label for="inTelefono">Teléfono</label>
+      <label for="inTelefono">Tu celular (WhatsApp) <span style="font-weight:400;color:#888">— para recibir tu guía</span></label>
       <input id="inTelefono" type="tel" autocomplete="tel" placeholder="Ej: +58 412 1234567" maxlength="20">
       <span class="err">Campo requerido</span>
       <div class="err">Por favor ingresá tu cargo.</div>
@@ -599,7 +618,8 @@ Evitá ver videos de desastres o cadenas alarmistas. Informate solo 1–2 veces 
 _Estamos contigo. Mantené la calma, esto también pasará._
 
 ¿Tenés un familiar o vecino en pánico? Reenviale esta guía.
-🚨 Emergencias: [NÚMERO DE EMERGENCIA]`,
+🚨 *Emergencia médica Silva:*
+https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n.`,
 
   agotamiento: `
 
@@ -620,7 +640,8 @@ Es normal sentir ganas de llorar, desesperanza o apatía. No te exijás ser prod
 _Tu cuerpo es sabio y se está defendiendo a través del descanso. Permitite parar en un lugar seguro._
 
 ¿Tenés un familiar o vecino que lo necesita? Reenviale esta guía.
-🚨 Emergencias: [NÚMERO DE EMERGENCIA]`,
+🚨 *Emergencia médica Silva:*
+https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n.`,
 
   gastro: `
 
@@ -641,33 +662,40 @@ Si tenés a la mano, tomá té de manzanilla, menta o malojillo. Ayudan a relaja
 _Tu cuerpo está reflejando lo que tu mente está procesando. Cuidá tu alimentación mientras vuelve la calma._
 
 ¿Tenés un familiar o vecino que lo necesita? Reenviale esta guía.
-🚨 Emergencias: [NÚMERO DE EMERGENCIA]`
+🚨 *Emergencia médica Silva:*
+https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n.`
 };
 
 let _calmaUrl = null, _calmaItemId = null;
 
-function mostrarCalma(waUrl, itemId, categoria, nombre){
-  _calmaUrl = waUrl;
+function mostrarCalma(itemId, categoria, nombre){
   _calmaItemId = itemId;
   const primerNombre = (nombre || '').split(' ')[0] || 'querido/a';
   const fn = FLYER_PANTALLA[categoria] || FLYER_PANTALLA.panico;
   document.getElementById('calmaMsg').textContent = fn(primerNombre);
+
+  // Envía el flyer al celular del propio usuario (no a EVA)
+  const p = getProfile() || {};
+  const phone = (p.telefono || '').replace(/\D/g, '');
+  const flyerText = (FLYER_WA[categoria] || FLYER_WA.panico).replace(/^\n+---\n/, '');
+  _calmaUrl = phone
+    ? `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURIComponent(flyerText)}&type=phone_number&app_absent=0`
+    : null;
+
   document.getElementById('calmaOverlay').classList.add('show');
 }
 function abrirDesdeCalma(){
-  if (_calmaUrl) window.open(_calmaUrl, '_blank');
+  if (_calmaUrl){
+    window.open(_calmaUrl, '_blank');
+  } else {
+    showToast('Agregá tu celular en "Editar mis datos" para recibir la guía');
+  }
   if (_calmaItemId) mark(_calmaItemId);
   cerrarCalma();
 }
 function cerrarCalma(){
   document.getElementById('calmaOverlay').classList.remove('show');
   _calmaUrl = null; _calmaItemId = null;
-}
-
-function buildCalmaUrl(item, extraMsg){
-  const cat = ITEM_CATEGORY[item.id] || 'panico';
-  const enriched = { ...item, msg: item.msg + (FLYER_WA[cat] || '') };
-  return waUrl(enriched);
 }
 
 /* ════════════════ WEARABLES (TRYVITAL) ════════════════ */
@@ -732,7 +760,7 @@ function buildItem(it, layout, i){
     if (it.testFlow){ abrirTest(it); return; }
     const cat = ITEM_CATEGORY[it.id] || 'panico';
     const p = getProfile() || {};
-    mostrarCalma(buildCalmaUrl(it), it.id, cat, p.nombre || '');
+    mostrarCalma(it.id, cat, p.nombre || '');
   });
 
   const wa = document.createElement('span');
@@ -883,7 +911,7 @@ function finalizarTest(){
   const _pDep = getProfile() || {};
   const itemFinal = { ...testItem, msg: `Completé el *Test de Depresión* desde la web (escala 0 = nunca … 6 = todos los días). Estas son mis respuestas:\n\n${resumen}` + (FLYER_WA[_catDep]||'') };
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(waUrl(itemFinal), testItem.id, _catDep, _pDep.nombre || '');
+  mostrarCalma(testItem.id, _catDep, _pDep.nombre || '');
 }
 
 // ── Fatiga · Perelli SP ───────────────────────────────────────────────────────
@@ -1066,7 +1094,7 @@ function finalizarPerelli(){
   const itemFinal = { ...perelliState.item, msg: msg + (FLYER_WA[_catPer]||'') };
   perelliState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(waUrl(itemFinal), _perId, _catPer, _pPer.nombre || '');
+  mostrarCalma(_perId, _catPer, _pPer.nombre || '');
 }
 
 // ── Somnolencia · Escala KSS ─────────────────────────────────────────────────
@@ -1231,7 +1259,7 @@ function finalizarKss(){
   const itemFinal = { ...kssState.item, msg: msg + (FLYER_WA[_catKss]||'') };
   kssState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(waUrl(itemFinal), _kssId, _catKss, _pKss.nombre || '');
+  mostrarCalma(_kssId, _catKss, _pKss.nombre || '');
 }
 
 // ── Test de Estrés ──────────────────────────────────────────────
@@ -1284,7 +1312,7 @@ function finalizarEstres(){
   const itemFinal = { ...estresState.item, msg: msg + (FLYER_WA[_catEst]||'') };
   estresState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(waUrl(itemFinal), _estId, _catEst, _pEst.nombre || '');
+  mostrarCalma(_estId, _catEst, _pEst.nombre || '');
 }
 
 // ── Test de Ansiedad (BAI) ──────────────────────────────────────
@@ -1332,7 +1360,7 @@ function finalizarAnsiedad(){
   const itemFinal = { ...ansiedadState.item, msg: msg + (FLYER_WA[_catAns]||'') };
   ansiedadState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(waUrl(itemFinal), _ansId, _catAns, _pAns.nombre || '');
+  mostrarCalma(_ansId, _catAns, _pAns.nombre || '');
 }
 
 // ── Test Gastrointestinal ────────────────────────────────────────
@@ -1382,7 +1410,7 @@ function finalizarGastro(){
   const itemFinal = { ...gastroState.item, msg: msg + (FLYER_WA[_catGas]||'') };
   gastroState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(waUrl(itemFinal), _gasId, _catGas, _pGas.nombre || '');
+  mostrarCalma(_gasId, _catGas, _pGas.nombre || '');
 }
 
 function refreshStates(){
