@@ -284,8 +284,13 @@
   .share-fab svg { width: 17px; height: 17px; }
 
   /* ── Calma overlay ── */
-  .calma-sheet { text-align: center; max-height: 88vh; overflow: hidden; }
-  .breath-wrap { position: relative; width: 64px; height: 64px; margin: 0 auto 1rem; flex-shrink: 0; }
+  .calma-sheet { text-align: center;
+    max-height: calc(100svh - max(1.5rem, env(safe-area-inset-top)));
+    overflow: hidden; padding-top: 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .calma-sheet h2 { flex-shrink: 0; }
+  .calma-sheet .cancel-btn { flex-shrink: 0; margin-top: 0.7rem; }
+  #calmaGuide { min-height: 0; }
+  .breath-wrap { position: relative; width: 44px; height: 44px; margin: 0 auto 0.7rem; flex-shrink: 0; }
   .breath-ring { width: 100%; height: 100%; border-radius: 50%; background: rgba(244,122,31,0.12);
     border: 3px solid var(--orange); animation: breathe 8s ease-in-out infinite; }
   .breath-lbl { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
