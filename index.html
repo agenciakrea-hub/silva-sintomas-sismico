@@ -169,10 +169,14 @@
 
   /* ── Setup overlay ── */
   .overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(6,16,38,0.86); backdrop-filter: blur(6px);
-    display: none; align-items: center; justify-content: center; padding: 1.2rem; animation: fadeIn .25s ease; }
+    display: none; align-items: center; justify-content: center;
+    padding: max(0.8rem, env(safe-area-inset-top)) 0.8rem max(0.8rem, env(safe-area-inset-bottom));
+    overflow: hidden; overscroll-behavior: contain; }
   .overlay.show { display: flex; }
-  .sheet { width: 100%; max-width: 410px; background: var(--card); border-radius: 24px; padding: 1.6rem 1.4rem 1.5rem;
-    color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: slideUp .3s ease; max-height: 90vh; overflow-y: auto; }
+  .sheet { width: 100%; max-width: 430px; background: var(--card); border-radius: 20px;
+    padding: 1.4rem 1.3rem; color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: slideUp .3s ease; max-height: calc(100svh - 2rem); overflow-y: auto;
+    overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .consent-sub { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-top: 1.2rem; }
   .consent-text { font-size: 0.81rem; color: var(--text-soft); line-height: 1.55; margin-top: 0.55rem; }
   .consent-text strong { color: var(--text); }
@@ -191,17 +195,17 @@
     background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; font-weight: 700; font-size: 0.95rem;
     font-family: inherit; cursor: pointer; box-shadow: 0 6px 18px rgba(244,122,31,0.38); transition: transform .12s; }
   .save-btn:active { transform: scale(0.98); }
-  .cancel-btn { width: 100%; margin-top: 0.6rem; padding: 0.7rem; border: none; background: none; color: var(--text-muted);
+  .cancel-btn { width: 100%; margin-top: 0.6rem; padding: 0.85rem; border: 1.5px solid #e0e4ec; border-radius: 13px; background: #f5f6f9; color: var(--text-muted); font-size: 0.95rem;
     font-family: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
   .privacy { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 1rem; line-height: 1.5; }
 
   /* ── Test interactivo (prueba) ── */
-  #testOverlay .sheet { min-height: 600px; display: flex; flex-direction: column; }
+  #testOverlay .sheet { min-height: min(560px, calc(100svh - 3.5rem)); display: flex; flex-direction: column; overflow: hidden; }
   .test-progress { width: 100%; height: 6px; background: #eef1f5; border-radius: 999px; overflow: hidden; margin-bottom: 1rem; }
   .test-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--orange), var(--orange-2)); border-radius: 999px; transition: width .3s ease; }
   .test-count { font-size: 0.74rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
   #testQuestion { min-height: 4.6rem; display: flex; align-items: center; }
-  .test-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.2rem; margin-bottom: 0.6rem; flex: 1; }
+  .test-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.2rem; margin-bottom: 0.6rem; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .test-opt { display: flex; align-items: center; gap: 0.7rem; width: 100%; padding: 0.75rem 0.9rem; border: 1.5px solid #eef1f5;
     border-radius: 13px; background: #fafbfd; cursor: pointer; font-family: inherit; text-align: left; transition: transform .1s ease, border-color .15s; }
   .test-opt:active { transform: scale(0.98); border-color: var(--orange); }
@@ -284,13 +288,17 @@
   .share-fab svg { width: 17px; height: 17px; }
 
   /* ── Calma overlay ── */
-  .calma-sheet { text-align: center;
-    max-height: calc(100svh - max(1.5rem, env(safe-area-inset-top)));
-    overflow: hidden; padding-top: 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
-  .calma-sheet h2 { flex-shrink: 0; }
-  .calma-sheet .cancel-btn { flex-shrink: 0; margin-top: 0.7rem; }
-  #calmaGuide { min-height: 0; }
-  .breath-wrap { position: relative; width: 44px; height: 44px; margin: 0 auto 0.7rem; flex-shrink: 0; }
+  .calma-sheet { display: flex; flex-direction: column; text-align: center;
+    max-height: calc(100svh - 2rem); overflow: hidden; }
+  .calma-sheet h2 { flex-shrink: 0; font-size: 1.05rem; margin-bottom: 0.6rem; }
+  .calma-sheet .cancel-btn { flex-shrink: 0; }
+  #calmaGuide { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch; text-align: left; font-size: 0.97rem;
+    line-height: 1.65; color: var(--text); padding-right: 0.2rem; margin-bottom: 0.3rem; }
+  #calmaGuide p { margin: 0 0 0.75rem; }
+  #calmaGuide strong { font-weight: 700; }
+  #calmaGuide em { font-style: italic; color: var(--text-muted); }
+  .breath-wrap { position: relative; width: 44px; height: 44px; margin: 0 auto 0.6rem; flex-shrink: 0; }
   .breath-ring { width: 100%; height: 100%; border-radius: 50%; background: rgba(244,122,31,0.12);
     border: 3px solid var(--orange); animation: breathe 8s ease-in-out infinite; }
   .breath-lbl { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
@@ -494,7 +502,7 @@
       <div class="breath-ring"></div>
       <span class="breath-lbl" id="breathLbl">respira</span>
     </div>
-    <div id="calmaGuide" style="flex:1;overflow-y:auto;text-align:left;font-size:0.875rem;line-height:1.65;color:var(--text);padding-right:0.15rem;margin-bottom:0.8rem"></div>
+    <div id="calmaGuide"></div>
     <button class="cancel-btn" onclick="cerrarCalma()">Entendido · Cerrar</button>
   </div>
 </div>
@@ -1438,6 +1446,18 @@ async function compartirPortal(){
     showToast('Compartí este enlace: ' + url);
   }
 }
+
+/* ════════════════ BODY SCROLL LOCK ════════════════ */
+(function(){
+  const obs = new MutationObserver(() => {
+    const anyOpen = !!document.querySelector('.overlay.show');
+    document.documentElement.style.overflow = anyOpen ? 'hidden' : '';
+    document.body.style.overflow = anyOpen ? 'hidden' : '';
+  });
+  document.querySelectorAll('.overlay').forEach(el =>
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] })
+  );
+})();
 
 /* ════════════════ TOAST ════════════════ */
 let toastT;
