@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Silva Salud · Apoyo Sísmico</title>
 
-<meta name="description" content="Portal de apoyo emocional ante la crisis sísmica · Silva Salud — Reportá cómo te sentís y EVA te asistirá de inmediato.">
+<meta name="description" content="Portal de apoyo emocional ante la crisis sísmica · Silva Salud — Reportá cómo te sentís y recibí orientación de inmediato.">
 
 <link rel="apple-touch-icon" sizes="192x192" href="ic192v2.png">
 <link rel="icon" type="image/png" sizes="192x192" href="ic192v2.png">
@@ -284,10 +284,8 @@
   .share-fab svg { width: 17px; height: 17px; }
 
   /* ── Calma overlay ── */
-  .calma-sheet { text-align: center; }
-  .calma-emoji { font-size: 2.8rem; margin-bottom: 0.5rem; }
-  .calma-msg { font-size: 0.88rem; color: var(--text-soft); line-height: 1.65; margin: 0.6rem 0 1.4rem; white-space: pre-line; text-align: left; }
-  .breath-wrap { position: relative; width: 88px; height: 88px; margin: 0 auto 1.5rem; }
+  .calma-sheet { text-align: center; max-height: 88vh; overflow: hidden; }
+  .breath-wrap { position: relative; width: 64px; height: 64px; margin: 0 auto 1rem; flex-shrink: 0; }
   .breath-ring { width: 100%; height: 100%; border-radius: 50%; background: rgba(244,122,31,0.12);
     border: 3px solid var(--orange); animation: breathe 8s ease-in-out infinite; }
   .breath-lbl { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
@@ -325,6 +323,11 @@
         <div class="ic" style="background:#f0ebfa;color:#7c5cc4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
         <div class="tx"><span class="tt">Personas desaparecidas</span><span class="ds">redayudavenezuela.com</span></div>
         <div class="st"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+      </a>
+      <a class="rbtn" href="https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n." target="_blank" rel="noopener" style="border-color:#d63031;background:#fff5f5">
+        <div class="ic" style="background:#ffeaea;color:#d63031"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div class="tx"><span class="tt" style="color:#d63031">Atención médica de emergencia</span><span class="ds">Contacto directo vía WhatsApp</span></div>
+        <div class="st"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d63031" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
       </a>
     </div>
   </section>
@@ -481,17 +484,13 @@
 <!-- Overlay de calma (post-test / post-tap) -->
 <div class="overlay" id="calmaOverlay">
   <div class="sheet calma-sheet">
-    <h2 id="calmaTitle" style="font-size:1.15rem;margin-bottom:0.3rem">Un momento</h2>
-    <p class="calma-msg" id="calmaMsg"></p>
+    <h2 id="calmaTitle" style="font-size:1.05rem;margin-bottom:0.7rem">Un momento</h2>
     <div class="breath-wrap">
       <div class="breath-ring"></div>
-      <span class="breath-lbl" id="breathLbl">4 · 4 · 4</span>
+      <span class="breath-lbl" id="breathLbl">respira</span>
     </div>
-    <button class="save-btn wa-send-btn" id="calmaWaBtn" onclick="abrirDesdeCalma()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-      Ver mi guía en WhatsApp
-    </button>
-    <button class="cancel-btn" onclick="cerrarCalma()">Cerrar</button>
+    <div id="calmaGuide" style="flex:1;overflow-y:auto;text-align:left;font-size:0.875rem;line-height:1.65;color:var(--text);padding-right:0.15rem;margin-bottom:0.8rem"></div>
+    <button class="cancel-btn" onclick="cerrarCalma()">Entendido · Cerrar</button>
   </div>
 </div>
 
@@ -500,7 +499,6 @@
 <script>
 /* ════════════════ CONFIG ════════════════ */
 const APP_VERSION = '1.0';                  // ← Subí este número en cada actualización
-const EVA_PHONE   = '584129089379';        // WhatsApp de EVA
 const LINK_TRYVITAL = 'https://link.tryvital.io/?token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImM1Y2E4OGEyMzQxZDQ1M2U0MzU1YTIzZjNiOTZhNWEzMjdjOTY3NDciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiAiaWQtc2lnbmVyLXN0Zy11c0B2aXRhbC1pZC1zdGctdXMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAiYXVkIjogImh0dHBzOi8vYXBpLnNhbmRib3gudHJ5dml0YWwuaW8vdjIvbGluayIsICJpYXQiOiAxNzc5ODM5OTMwLCAiZXhwIjogMTc3OTg0MzUzMCwgInN1YiI6ICJhMThlYTYyMi1mNWMzLTRjZjMtYTc4YS1lZWQxMTM2MzNhZjciLCAidXNlcl9pZCI6ICI5NDhmMTEyNy02OWFiLTQ0MGUtOWRiOS1iN2ZlYTNjZDg1NGMiLCAidGVhbV9pZCI6ICJkMjQ1NTMxNC03YzAxLTRkZGUtYTVhMy0wODg4ZGMwNTJhN2UifQ.J5LDp87fJjSUv9mdmK4HVx3R8GqfnQgk9ue3osPVTR7U2kGszk0IWhmpzufoeW_yViurWjkK71dZzUuJuu1iLBHjy9xKD8IrUvqrTAFKkCtP7cCnKB9ZzwCyugfg8liNsDrx7oXFKGpyLcmeQMrR5rez4nHQC8M8Gqh7nKz3QGcX3wSsQK3U0MBpz4_NLnXYJNwM6zfM2vpmUkyfn7-tpTDZ5YqIrPR4-0rac4p5UXkNQ475a3UWWSG8oMwNN7n_J3sYCwwV1l4JDypIzuDTZsdyU5NVOoljEnFSzqC5an-XQU1CDzALs6UPNpRr-m4RjKYxMDpEPDsPw7njwooZOw&env=sandbox&region=us'; // Link de vinculación TryVital (wearables)
 
 // Iconos SVG reutilizables
@@ -567,15 +565,6 @@ function getReports(){
 }
 function saveReports(r){ localStorage.setItem(K_REPORTS, JSON.stringify(r)); }
 
-/* ════════════════ MENSAJES ════════════════ */
-function buildMessage(item){
-  const p = getProfile() || {nombre:'', empresa:'', cedula:'', departamento:'', cargo:''};
-  const base = `Hola EVA. Soy ${p.nombre}, ${p.cedula}, de ${p.empresa}, ${p.departamento}, ${p.cargo}. `;
-  return base + item.msg;
-}
-function waUrl(item){
-  return `https://api.whatsapp.com/send/?phone=${EVA_PHONE}&text=${encodeURIComponent(buildMessage(item))}&type=phone_number&app_absent=0`;
-}
 function enviarOperacional(campo){
   if (!SHEETS_OPERACIONAL_URL || !campo) return;
   const p = getProfile() || {};
@@ -597,118 +586,64 @@ const ITEM_CATEGORY = {
   sen_gastro:       'gastro'
 };
 
-const FLYER_PANTALLA = {
-  panico:     (n) => `Abrazo digital, ${n}. Lo que sentís es una respuesta normal de tu cuerpo ante el peligro. Vamos a calmar tu sistema nervioso juntos.\n\nHacé esto ahora: inhalá 4 segundos → retené 4 → exhalá 4. Repetilo mientras abrís el WhatsApp que te acabamos de preparar.`,
-  agotamiento:(n) => `Registrado, ${n}. Estar en alerta constante durante días agota más que correr un maratón. Tu fatiga es real y tu cuerpo te está pidiendo desconexión segura.\n\nAbrí el WhatsApp para ver cómo recuperar energía sin descuidar tu seguridad.`,
-  gastro:     (n) => `Entendido, ${n}. El sistema digestivo es nuestro "segundo cerebro". Cuando hay miedo colectivo, el estómago reacciona de inmediato.\n\nTe preparamos indicaciones médicas y emocionales sencillas en tu WhatsApp.`
-};
-
-// TODO: reemplazar [NÚMERO DE EMERGENCIA] con el número real (ej: +58 212 xxx xxxx)
-const FLYER_WA = {
-  panico: `
-
----
-🦅 *Silva Salud · Guía de Emergencia ante la Ansiedad y Réplicas*
-
-Llevamos días de mucha tensión en Caracas y es completamente normal sentir miedo o pánico con cada réplica. Tu cuerpo está en modo "supervivencia". Aquí tenés tus instrucciones de calma:
-
-*1. Anclá tu mente al presente (Técnica 3-3-3):*
-Si sentís que el pánico te domina, mirá a tu alrededor y nombrá en voz alta:
-• 3 cosas que puedas ver
-• 3 sonidos que puedas escuchar
-• Mové 3 partes de tu cuerpo (brazos, tobillos, hombros)
-Esto le avisa a tu cerebro que estás a salvo *aquí y ahora*.
-
-*2. Protocolo ante una Réplica:*
-• No corras desesperadamente durante el movimiento
-• Alejate de ventanas, espejos u objetos que puedan caer
-• Si estás en un piso alto, ubicate en la zona estructural más segura (columnas)
-• Tené a mano tu bolso de emergencia (agua, linterna, cédula, cargador)
-
-*3. Filtrá la información:*
-Evitá ver videos de desastres o cadenas alarmistas. Informate solo 1–2 veces al día por fuentes oficiales.
-
-_Estamos contigo. Mantené la calma, esto también pasará._
-
-¿Tenés un familiar o vecino en pánico? Reenviale esta guía.
-🚨 *Emergencia médica Silva:*
-https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n.`,
-
-  agotamiento: `
-
----
-🦅 *Silva Salud · Gestión del Agotamiento Post-Sismo*
-
-Cuando pasamos días esperando una réplica, el cerebro produce cortisol y adrenalina sin parar. Cuando el nivel baja, aparece una *fatiga extrema, somnolencia o una sensación de desgano / tristeza*. Tu batería está en 5%.
-
-*1. Descanso en relevos:*
-Si vivís acompañado/a, organicen turnos de atención para la noche. Saber que alguien más está alerta te permitirá descansar profundamente unas horas.
-
-*2. Hidratación constante:*
-El estrés severo deshidrata las células del cerebro, empeorando la fatiga. Tomá pequeños sorbos de agua cada hora, aunque no tengas sed.
-
-*3. Validá tus emociones:*
-Es normal sentir ganas de llorar, desesperanza o apatía. No te exijás ser productivo/a al 100% en este momento. Tu prioridad es regular tu energía.
-
-_Tu cuerpo es sabio y se está defendiendo a través del descanso. Permitite parar en un lugar seguro._
-
-¿Tenés un familiar o vecino que lo necesita? Reenviale esta guía.
-🚨 *Emergencia médica Silva:*
-https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n.`,
-
-  gastro: `
-
----
-🦅 *Silva Salud · Alivio Gastrointestinal por Estrés de Crisis*
-
-Los sismos activan el sistema nervioso simpático, el cual corta la digestión para enviar sangre a los músculos. Esto causa náuseas, acidez, colon irritable o dolor estomacal.
-
-*1. Alimentación de crisis (48 hs):*
-Evitá el café en exceso, el picante, las grasas saturadas y los refrescos. Optá por comidas tibias: arroz, pollo a la plancha, galletas de soda o sopas claras.
-
-*2. Calor local y respiración diafragmática:*
-Colocá algo tibio sobre tu abdomen. Poné una mano en tu pecho y otra en el estómago; respirá haciendo que se mueva solo la mano del estómago. Esto relaja los músculos digestivos.
-
-*3. Infusiones aliadas:*
-Si tenés a la mano, tomá té de manzanilla, menta o malojillo. Ayudan a relajar los músculos estomacales contraídos por el susto.
-
-_Tu cuerpo está reflejando lo que tu mente está procesando. Cuidá tu alimentación mientras vuelve la calma._
-
-¿Tenés un familiar o vecino que lo necesita? Reenviale esta guía.
-🚨 *Emergencia médica Silva:*
-https://wa.me/584241466595?text=Vengo+de+la+web+de+s%C3%ADntomas%2C+tengo+una+emergencia+y+requiero+atenci%C3%B3n.`
-};
-
-let _calmaUrl = null, _calmaItemId = null;
-
-function mostrarCalma(itemId, categoria, nombre){
-  _calmaItemId = itemId;
-  const primerNombre = (nombre || '').split(' ')[0] || 'querido/a';
-  const fn = FLYER_PANTALLA[categoria] || FLYER_PANTALLA.panico;
-  document.getElementById('calmaMsg').textContent = fn(primerNombre);
-
-  // Envía el flyer al celular del propio usuario (no a EVA)
-  const p = getProfile() || {};
-  const phone = (p.telefono || '').replace(/\D/g, '');
-  const flyerText = (FLYER_WA[categoria] || FLYER_WA.panico).replace(/^\n+---\n/, '');
-  _calmaUrl = phone
-    ? `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURIComponent(flyerText)}&type=phone_number&app_absent=0`
-    : null;
-
-  document.getElementById('calmaOverlay').classList.add('show');
-}
-function abrirDesdeCalma(){
-  if (_calmaUrl){
-    window.open(_calmaUrl, '_blank');
-  } else {
-    showToast('Agregá tu celular en "Editar mis datos" para recibir la guía');
+const FLYER_SCREEN = {
+  panico: {
+    titulo: 'Guía ante la ansiedad y réplicas',
+    html: `<p>Tu cuerpo está en modo supervivencia. Eso es completamente normal. Aquí tenés pasos concretos:</p>
+<p><strong>1. Técnica 3-3-3 (anclate al presente)</strong><br>
+Mirá a tu alrededor y nombrá en voz alta:<br>
+&bull; 3 cosas que podés <strong>ver</strong><br>
+&bull; 3 <strong>sonidos</strong> que escuchás<br>
+&bull; Mové 3 <strong>partes de tu cuerpo</strong> (brazos, tobillos, hombros)<br>
+Esto le avisa a tu cerebro que estás a salvo aquí y ahora.</p>
+<p><strong>2. Protocolo ante una réplica</strong><br>
+&bull; No corras durante el movimiento<br>
+&bull; Alejate de ventanas y objetos que puedan caer<br>
+&bull; En piso alto, ubicate junto a las columnas estructurales<br>
+&bull; Tené a mano: agua, linterna, cédula y cargador</p>
+<p><strong>3. Filtrá la información</strong><br>
+Evitá videos de desastres o cadenas alarmistas. Informate solo 1–2 veces al día por fuentes oficiales.</p>
+<p><em>Mantené la calma. Esto también pasará.</em></p>
+<p style="font-size:0.8rem;color:var(--text-muted)">¿Tenés un familiar o vecino en pánico? Compartile el portal.</p>`
+  },
+  agotamiento: {
+    titulo: 'Guía ante el agotamiento post-sismo',
+    html: `<p>Cuando pasamos días esperando una réplica, el cerebro produce cortisol y adrenalina sin parar. Cuando el nivel baja, aparece una <strong>fatiga extrema, somnolencia o sensación de desgano</strong>.</p>
+<p><strong>1. Descanso en relevos</strong><br>
+Si vivís acompañado/a, organicen turnos de atención para la noche. Saber que alguien más está alerta te permitirá descansar profundamente unas horas.</p>
+<p><strong>2. Hidratación constante</strong><br>
+El estrés severo deshidrata las células del cerebro, empeorando la fatiga. Tomá pequeños sorbos de agua cada hora, aunque no tengas sed.</p>
+<p><strong>3. Validá tus emociones</strong><br>
+Es normal sentir ganas de llorar, desesperanza o apatía. No te exijás ser productivo/a al 100%. Tu prioridad es regular tu energía.</p>
+<p><em>Tu cuerpo es sabio y se está defendiendo a través del descanso. Permitite parar en un lugar seguro.</em></p>
+<p style="font-size:0.8rem;color:var(--text-muted)">¿Tenés un familiar o vecino que lo necesita? Compartile el portal.</p>`
+  },
+  gastro: {
+    titulo: 'Guía gastrointestinal por estrés de crisis',
+    html: `<p>Los sismos activan el sistema nervioso simpático, que corta la digestión para enviar sangre a los músculos. Esto causa náuseas, acidez, colon irritable o dolor estomacal.</p>
+<p><strong>1. Alimentación de crisis (48 h)</strong><br>
+Evitá el café, el picante, las grasas y los refrescos. Optá por comidas tibias: arroz, pollo a la plancha, galletas de soda o sopas claras.</p>
+<p><strong>2. Calor local y respiración diafragmática</strong><br>
+Colocá algo tibio sobre tu abdomen. Respirá haciendo que se mueva solo la mano del estómago. Esto relaja los músculos digestivos.</p>
+<p><strong>3. Infusiones aliadas</strong><br>
+Tomá té de manzanilla, menta o malojillo. Ayudan a relajar los músculos estomacales contraídos por el susto.</p>
+<p><em>Tu cuerpo está reflejando lo que tu mente está procesando. Cuidá tu alimentación mientras vuelve la calma.</em></p>
+<p style="font-size:0.8rem;color:var(--text-muted)">¿Tenés un familiar o vecino que lo necesita? Compartile el portal.</p>`
   }
-  if (_calmaItemId) mark(_calmaItemId);
-  cerrarCalma();
+};
+
+let _calmaItemId = null;
+
+function mostrarCalma(itemId, categoria){
+  _calmaItemId = itemId;
+  const flyer = FLYER_SCREEN[categoria] || FLYER_SCREEN.panico;
+  document.getElementById('calmaTitle').textContent = flyer.titulo;
+  document.getElementById('calmaGuide').innerHTML = flyer.html;
+  document.getElementById('calmaOverlay').classList.add('show');
 }
 function cerrarCalma(){
   document.getElementById('calmaOverlay').classList.remove('show');
-  _calmaUrl = null; _calmaItemId = null;
+  _calmaItemId = null;
 }
 
 /* ════════════════ WEARABLES (TRYVITAL) ════════════════ */
@@ -754,9 +689,7 @@ function buildItem(it, layout, i){
   if (it.testFlow){
     a.href = 'javascript:void(0)';
   } else {
-    a.href = waUrl(it);
-    a.target = '_blank';
-    a.rel = 'noopener';
+    a.href = 'javascript:void(0)';
   }
 
   const iconHtml = `<div class="ic" style="background:${it.ic};color:${it.icc}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${it.icon}</svg></div>`;
@@ -772,8 +705,7 @@ function buildItem(it, layout, i){
     e.preventDefault();
     if (it.testFlow){ abrirTest(it); return; }
     const cat = ITEM_CATEGORY[it.id] || 'panico';
-    const p = getProfile() || {};
-    mostrarCalma(it.id, cat, p.nombre || '');
+    mostrarCalma(it.id, cat);
   });
 
   const wa = document.createElement('span');
@@ -906,8 +838,8 @@ function renderTestFinal(){
   updateBackBtn(true);
   document.getElementById('testCount').textContent = `Completaste las ${TEST_DEPRESION.length} preguntas`;
   document.getElementById('testProgressBar').style.width = '100%';
-  document.getElementById('testQuestion').textContent = 'Listo. Tocá el botón para enviarle tus respuestas a EVA por WhatsApp.';
-  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarTest()">${waSVG}Enviar</button>`;
+  document.getElementById('testQuestion').textContent = 'Listo. Registrá tus respuestas y accedé a la guía de orientación.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn" onclick="finalizarTest()">Registrar y ver guía</button>`;
 }
 function finalizarTest(){
   const resumen = TEST_DEPRESION.map((preg, i) => `${i + 1}. ${preg}: ${testRespuestas[i]} = ${TEST_ESCALA[testRespuestas[i]]}`).join('\n');
@@ -921,10 +853,8 @@ function finalizarTest(){
     fetch(SHEETS_DEPRESION_URL + '?' + params, { mode:'no-cors' }).catch(() => {});
   }
   const _catDep = ITEM_CATEGORY[testItem.id] || 'agotamiento';
-  const _pDep = getProfile() || {};
-  const itemFinal = { ...testItem, msg: `Completé el *Test de Depresión* desde la web (escala 0 = nunca … 6 = todos los días). Estas son mis respuestas:\n\n${resumen}` + (FLYER_WA[_catDep]||'') };
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(testItem.id, _catDep, _pDep.nombre || '');
+  mostrarCalma(testItem.id, _catDep);
 }
 
 // ── Fatiga · Perelli SP ───────────────────────────────────────────────────────
@@ -1085,8 +1015,8 @@ function renderPerelliFinal(){
   updateBackBtn(true);
   document.getElementById('testCount').textContent = `Completaste las ${PERELLI_STEPS.length} preguntas`;
   document.getElementById('testProgressBar').style.width = '100%';
-  document.getElementById('testQuestion').textContent = 'Listo. Tocá el botón para enviarle tus resultados a EVA por WhatsApp.';
-  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarPerelli()">${waSVG}Enviar</button>`;
+  document.getElementById('testQuestion').textContent = 'Listo. Registrá tus respuestas y accedé a la guía de orientación.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn" onclick="finalizarPerelli()">Registrar y ver guía</button>`;
 }
 function finalizarPerelli(){
   const [fase, nivelFatiga, sintomas, funciones, calidadSuenio, factores, capacidad, comentarios] = perelliState.answers;
@@ -1102,12 +1032,10 @@ function finalizarPerelli(){
   const details = `*Momento del día:* ${fase}\n\n*Nivel de fatiga (1–7):* ${nivelFatiga}\n\n*Síntomas actuales:* ${sintomas}\n\n*Impacto en funciones (1–5):* ${funciones}\n\n*Calidad del sueño (24 h):* ${calidadSuenio}\n\n*Factores contribuyentes:* ${factores}\n\n*Capacidad para actividades habituales (1–5):* ${capacidad}${comentarios ? '\n\n*Comentarios:* ' + comentarios : ''}`;
   const msg = `Completé el *Test de Fatiga (Perelli SP)* desde el portal web.\n\n${details}`;
   const _catPer = ITEM_CATEGORY[perelliState.item.id] || 'agotamiento';
-  const _pPer = getProfile() || {};
   const _perId = perelliState.item.id;
-  const itemFinal = { ...perelliState.item, msg: msg + (FLYER_WA[_catPer]||'') };
   perelliState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(_perId, _catPer, _pPer.nombre || '');
+  mostrarCalma(_perId, _catPer);
 }
 
 // ── Somnolencia · Escala KSS ─────────────────────────────────────────────────
@@ -1234,8 +1162,8 @@ function renderKssFinal(){
   updateBackBtn(true);
   document.getElementById('testCount').textContent = `Completaste las ${KSS_STEPS.length} preguntas`;
   document.getElementById('testProgressBar').style.width = '100%';
-  document.getElementById('testQuestion').textContent = 'Listo. Tocá el botón para enviarle tus resultados a EVA por WhatsApp.';
-  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarKss()">${waSVG}Enviar</button>`;
+  document.getElementById('testQuestion').textContent = 'Listo. Registrá tus respuestas y accedé a la guía de orientación.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn" onclick="finalizarKss()">Registrar y ver guía</button>`;
 }
 function finalizarKss(){
   const [fase, nivelAlerta, horasSuenio, tipoOp, comentario] = kssState.answers;
@@ -1267,12 +1195,10 @@ function finalizarKss(){
   if (comentario) details += `\n\n*Comentario:* ${comentario}`;
   const msg = `Completé el *Test de Somnolencia (Escala KSS)* desde el portal web.\n\n${details}`;
   const _catKss = ITEM_CATEGORY[kssState.item.id] || 'agotamiento';
-  const _pKss = getProfile() || {};
   const _kssId = kssState.item.id;
-  const itemFinal = { ...kssState.item, msg: msg + (FLYER_WA[_catKss]||'') };
   kssState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(_kssId, _catKss, _pKss.nombre || '');
+  mostrarCalma(_kssId, _catKss);
 }
 
 // ── Test de Estrés ──────────────────────────────────────────────
@@ -1300,8 +1226,8 @@ function renderEstresFinal(){
   updateBackBtn(true);
   document.getElementById('testCount').textContent = `Completaste los ${ESTRES_STEPS.length} síntomas`;
   document.getElementById('testProgressBar').style.width = '100%';
-  document.getElementById('testQuestion').textContent = '¿Confirmás el envío del Test de Estrés?';
-  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarEstres()">${waSVG}Enviar</button>`;
+  document.getElementById('testQuestion').textContent = 'Listo. Registrá tus respuestas y accedé a la guía de orientación.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn" onclick="finalizarEstres()">Registrar y ver guía</button>`;
 }
 function finalizarEstres(){
   const FREQ_LABELS = ['Nunca','Raramente','Una vez al mes o menos','Unas pocas veces al mes','Una vez a la semana','Unas pocas veces a la semana','Todos los días'];
@@ -1320,12 +1246,10 @@ function finalizarEstres(){
   const details = ESTRES_SINTOMAS.map((s, i) => `*${s}:* ${ratings[i]}`).join('\n\n');
   const msg = `Completé el *Test de Estrés* desde el portal web.\n\n${details}`;
   const _catEst = ITEM_CATEGORY[estresState.item.id] || 'panico';
-  const _pEst = getProfile() || {};
   const _estId = estresState.item.id;
-  const itemFinal = { ...estresState.item, msg: msg + (FLYER_WA[_catEst]||'') };
   estresState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(_estId, _catEst, _pEst.nombre || '');
+  mostrarCalma(_estId, _catEst);
 }
 
 // ── Test de Ansiedad (BAI) ──────────────────────────────────────
@@ -1352,8 +1276,8 @@ function renderAnsiedadFinal(){
   updateBackBtn(true);
   document.getElementById('testCount').textContent = `Completaste los ${ANSIEDAD_STEPS.length} síntomas`;
   document.getElementById('testProgressBar').style.width = '100%';
-  document.getElementById('testQuestion').textContent = '¿Confirmás el envío del Test de Ansiedad?';
-  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarAnsiedad()">${waSVG}Enviar</button>`;
+  document.getElementById('testQuestion').textContent = 'Listo. Registrá tus respuestas y accedé a la guía de orientación.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn" onclick="finalizarAnsiedad()">Registrar y ver guía</button>`;
 }
 function finalizarAnsiedad(){
   const ANSIEDAD_LABELS = ['No ha estado presente','Levemente, no me ha molestado','Moderadamente, pero lo pude superar','Severamente, difícil lo soporté'];
@@ -1368,12 +1292,10 @@ function finalizarAnsiedad(){
   const details = ANSIEDAD_SINTOMAS.map((s,i) => `*${s}:* ${ratings[i]}`).join('\n\n');
   const msg = `Completé el *Test de Ansiedad (BAI)* desde el portal web.\n\n${details}`;
   const _catAns = ITEM_CATEGORY[ansiedadState.item.id] || 'panico';
-  const _pAns = getProfile() || {};
   const _ansId = ansiedadState.item.id;
-  const itemFinal = { ...ansiedadState.item, msg: msg + (FLYER_WA[_catAns]||'') };
   ansiedadState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(_ansId, _catAns, _pAns.nombre || '');
+  mostrarCalma(_ansId, _catAns);
 }
 
 // ── Test Gastrointestinal ────────────────────────────────────────
@@ -1400,8 +1322,8 @@ function renderGastroFinal(){
   updateBackBtn(true);
   document.getElementById('testCount').textContent = `Completaste los ${GASTRO_STEPS.length} síntomas`;
   document.getElementById('testProgressBar').style.width = '100%';
-  document.getElementById('testQuestion').textContent = '¿Confirmás el envío del Test Gastrointestinal?';
-  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarGastro()">${waSVG}Enviar</button>`;
+  document.getElementById('testQuestion').textContent = 'Listo. Registrá tus respuestas y accedé a la guía de orientación.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn" onclick="finalizarGastro()">Registrar y ver guía</button>`;
 }
 function finalizarGastro(){
   const GASTRO_LABELS = ['Muy en desacuerdo','En desacuerdo','De acuerdo'];
@@ -1418,12 +1340,10 @@ function finalizarGastro(){
   const details = GASTRO_SINTOMAS.map((s,i) => `*${s}:* ${ratings[i]}`).join('\n\n');
   const msg = `Completé el *Test Gastrointestinal* desde el portal web.\n\n${details}`;
   const _catGas = ITEM_CATEGORY[gastroState.item.id] || 'gastro';
-  const _pGas = getProfile() || {};
   const _gasId = gastroState.item.id;
-  const itemFinal = { ...gastroState.item, msg: msg + (FLYER_WA[_catGas]||'') };
   gastroState = null;
   document.getElementById('testOverlay').classList.remove('show');
-  mostrarCalma(_gasId, _catGas, _pGas.nombre || '');
+  mostrarCalma(_gasId, _catGas);
 }
 
 function refreshStates(){

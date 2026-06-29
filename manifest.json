@@ -1,7 +1,7 @@
 {
   "name": "Silva Salud · Apoyo Sísmico",
   "short_name": "Silva Síntomas",
-  "description": "Portal de apoyo emocional ante la crisis sísmica. Reportá cómo te sentís y EVA te asistirá de inmediato.",
+  "description": "Portal de apoyo emocional ante la crisis sísmica de Caracas. Reportá cómo te sentís y recibí orientación de inmediato.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
