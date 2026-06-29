@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Silva Salud · Apoyo Sísmico</title>
+
+<meta name="description" content="Portal de apoyo emocional ante la crisis sísmica · Silva Salud — Reportá cómo te sentís y EVA te asistirá de inmediato.">
+
+<link rel="apple-touch-icon" sizes="192x192" href="ic192v2.png">
+<link rel="icon" type="image/png" sizes="192x192" href="ic192v2.png">
+<link rel="icon" type="image/png" sizes="512x512" href="ic512v2.png">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#0a1f40">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Silva Síntomas">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,600;1,9..40,700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:        #0e2a56;
+    --navy-deep:   #0a1f40;
+    --navy-card:   #13316a;
+    --navy-line:   rgba(255,255,255,0.10);
+    --orange:      #f47a1f;
+    --orange-2:    #f7941d;
+    --card:        #ffffff;
+    --text:        #16233d;
+    --text-soft:   #525d73;
+    --text-muted:  #7b8499;
+    --green:       #1aa672;
+    --green-soft:  #e6f7f0;
+    --radius:      18px;
+    --radius-sm:   13px;
+    --shadow-sm:   0 1px 3px rgba(5,20,50,0.10);
+    --shadow-md:   0 8px 24px rgba(5,20,50,0.18);
+  }
+
+  html { background: var(--navy-deep); -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(28,74,150,0.55) 0%, transparent 60%),
+      radial-gradient(ellipse 90% 50% at 100% 100%, rgba(244,122,31,0.10) 0%, transparent 55%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    padding: env(safe-area-inset-top) 0 0;
+  }
+
+  .wrap { width: 100%; max-width: 560px; margin: 0 auto; padding: 1.1rem 1.05rem 6rem; }
+
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 0.6rem 0 1.4rem; animation: fadeUp .4s ease both; }
+  .logo-box { width: 104px; height: 104px; margin: 0 auto 0.95rem; border-radius: 24px;
+    background: linear-gradient(160deg,#1a378f,#0a1f5e); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12); padding: 14px; }
+  .logo-box img { width: 100%; height: 100%; object-fit: contain; }
+  .hero h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .hero .sub { font-weight: 700; font-size: 1.02rem;
+    color: var(--orange); margin-top: 0.1rem; letter-spacing: -0.01em; }
+  .hero p { font-size: 0.82rem; color: rgba(255,255,255,0.62); line-height: 1.55; max-width: 330px; margin: 0.7rem auto 0; }
+
+  /* ── Profile chip ── */
+  .profile-chip { display: flex; align-items: center; gap: 0.75rem; background: rgba(255,255,255,0.07);
+    border: 1px solid var(--navy-line); border-radius: var(--radius); padding: 0.75rem 0.85rem;
+    margin-bottom: 1.5rem; backdrop-filter: blur(6px); animation: fadeUp .4s ease .05s both; text-align: left; }
+  .profile-chip .pc-avatar { width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(150deg, var(--orange), var(--orange-2)); display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+  .profile-chip .pc-text { flex: 1; min-width: 0; }
+  .profile-chip .pc-name { font-size: 0.92rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .profile-chip .pc-emp { font-size: 0.74rem; font-weight: 600; color: rgba(255,255,255,0.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pc-edit { background: rgba(255,255,255,0.1); border: 1px solid var(--navy-line); color: #fff; border-radius: 10px;
+    padding: 0.45rem 0.7rem; font-size: 0.74rem; font-weight: 600; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0; transition: background .15s; }
+  .pc-edit:hover { background: rgba(255,255,255,0.18); }
+  .pc-edit svg { width: 13px; height: 13px; }
+
+  .portal-name { font-size: 1.4rem; font-weight: 800; color: var(--orange); margin: 0 0.3rem 1.2rem; letter-spacing: -0.01em;
+    animation: fadeUp .4s ease .07s both; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 1.7rem; animation: fadeUp .4s ease .1s both; }
+  .section + .section { padding-top: 1.6rem; border-top: 1px solid rgba(255,255,255,0.13); }
+  .sec-head { padding: 0 0.3rem 0.7rem; }
+  .sec-title { font-size: 1.18rem; font-weight: 800; letter-spacing: -0.01em; display:flex; align-items:center; gap:.5rem; }
+  .sec-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(244,122,31,0.18); }
+  .sec-sub { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.72); margin-top: 0.18rem; padding-left: 1rem; }
+
+  .stack { display: flex; flex-direction: column; gap: 0.6rem; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; grid-auto-rows: 1fr; }
+  .grid2 .item { display: flex; flex-direction: column; }
+  .grid2 .tile { flex: 1; width: 100%; }
+
+  /* ── Report buttons (row) ── */
+  .item { position: relative; }
+  .rbtn { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 0.85rem; width: 100%; padding: 0.85rem 0.95rem;
+    background: var(--card); border: 1.5px solid transparent; border-radius: var(--radius); text-decoration: none;
+    color: var(--text); box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .14s ease, box-shadow .14s ease, border-color .14s; text-align: left; }
+  .rbtn:active { transform: scale(0.985); }
+  .rbtn .ic { width: 44px; height: 44px; border-radius: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rbtn .ic svg { width: 22px; height: 22px; }
+  .rbtn .tx { flex: 1; min-width: 0; }
+  .rbtn .tt { display: block; font-size: 1.02rem; font-weight: 700; color: var(--text); }
+  .rbtn .ds { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-top: 0.1rem; }
+  .rbtn .st { flex-shrink: 0; display: flex; align-items: center; }
+  .rbtn .chev { color: var(--text-muted); transition: transform .2s ease; }
+  .badge { display: none; align-items: center; gap: 0.3rem; background: var(--green); color: #fff;
+    font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.55rem; border-radius: 999px; white-space: nowrap; }
+  .badge svg { width: 13px; height: 13px; color: #fff; }
+
+  /* Done state */
+  .item.done .rbtn { border-color: var(--green); background: #e7f7ef; }
+  .item.done .rbtn .chev { display: none; }
+  .item.done .badge { display: inline-flex; }
+
+  .wa-flag { display: flex; align-items: center; justify-content: center; position: absolute; top: 0.6rem; right: 0.6rem;
+    width: 24px; height: 24px; border-radius: 50%; background: rgba(37,211,102,0.55); color: #fff; }
+  .wa-flag svg { width: 14px; height: 14px; }
+  .item.done .wa-flag { display: none; }
+
+  .undo { display: none; align-items: center; justify-content: center; position: absolute; top: 0.6rem; right: 0.6rem;
+    width: 26px; height: 26px; border-radius: 50%; padding: 0; margin: 0; background: rgba(26,166,114,0.12);
+    border: none; color: var(--green); cursor: pointer; }
+  .undo:hover { background: rgba(26,166,114,0.22); }
+  .undo svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .item.done .undo { display: inline-flex; }
+
+  /* ── Sensaciones tiles (grid) ── */
+  .tile { display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem; padding: 1rem 0.9rem;
+    background: var(--card); border: 1.5px solid transparent; border-radius: var(--radius); text-decoration: none;
+    color: var(--text); box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .14s ease; position: relative; min-height: 118px; }
+  .tile:active { transform: scale(0.985); }
+  .tile .ic { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .tile .ic svg { width: 21px; height: 21px; }
+  .tile .tt { font-size: 1.02rem; font-weight: 800; color: var(--text); }
+  .tile .ds { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-top: -0.2rem; }
+  .item.done .tile { border-color: var(--green); background: #e7f7ef; }
+
+  /* ── Install button ── */
+  .install { display: none; align-items: center; gap: 0.85rem; width: 100%; padding: 0.9rem 1rem; margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--orange), var(--orange-2)); border: none; border-radius: var(--radius);
+    color: #fff; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.25); font-family: inherit; text-align: left;
+    animation: fadeUp .4s ease both; }
+  .install .ic { width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .install .ic svg { width: 22px; height: 22px; }
+  .install .tx { flex: 1; }
+  .install .tt { display: block; font-weight: 800; font-size: 1.02rem; }
+  .install .ds { display: block; font-size: 0.78rem; font-weight: 600; opacity: 0.95; margin-top: 0.05rem; }
+
+  /* ── Footer ── */
+  .foot { text-align: center; margin-top: 2.5rem; padding-top: 1.4rem; border-top: 2px solid var(--orange); }
+  .foot .profile-chip { margin: 1.5rem 0 0.85rem; }
+  .foot .install { margin: 0 0 1.4rem; }
+  .foot .fbrand { font-style: italic; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; color: #fff; }
+  .foot .fnote { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-top: 0.35rem; line-height: 1.5; }
+  .foot .ver { display: inline-block; margin-top: 0.55rem; font-size: 0.7rem; font-weight: 700; color: var(--orange);
+    background: rgba(244,122,31,0.12); border: 1px solid rgba(244,122,31,0.3); padding: 0.18rem 0.6rem; border-radius: 999px; }
+
+  /* ── Setup overlay ── */
+  .overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(6,16,38,0.86); backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center; padding: 1.2rem; animation: fadeIn .25s ease; }
+  .overlay.show { display: flex; }
+  .sheet { width: 100%; max-width: 410px; background: var(--card); border-radius: 24px; padding: 1.6rem 1.4rem 1.5rem;
+    color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: slideUp .3s ease; max-height: 90vh; overflow-y: auto; }
+  .consent-sub { font-size: 0.98rem; font-weight: 700; color: var(--text); margin-top: 1.2rem; }
+  .consent-text { font-size: 0.81rem; color: var(--text-soft); line-height: 1.55; margin-top: 0.55rem; }
+  .consent-text strong { color: var(--text); }
+  .sheet h2 { font-size: 1.22rem; font-weight: 700; letter-spacing: -0.01em; }
+  .sheet .lead { font-size: 0.83rem; color: var(--text-soft); margin-top: 0.35rem; line-height: 1.5; }
+  .field { margin-top: 1.1rem; }
+  .field label { display: block; font-size: 0.76rem; font-weight: 600; color: var(--text-soft); margin-bottom: 0.35rem; }
+  .field input, .field select { width: 100%; padding: 0.8rem 0.9rem; border: 1.5px solid #dfe4ec; border-radius: 12px;
+    font-size: 0.95rem; font-family: inherit; color: var(--text); background: #fafbfd; transition: border-color .15s; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--orange); background: #fff; }
+  .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aab' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.2rem; }
+  .field .err { color: #d63031; font-size: 0.72rem; margin-top: 0.3rem; display: none; }
+  .field.invalid input, .field.invalid select { border-color: #d63031; }
+  .field.invalid .err { display: block; }
+  .save-btn { width: 100%; margin-top: 1.4rem; padding: 0.9rem; border: none; border-radius: 13px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; font-weight: 700; font-size: 0.95rem;
+    font-family: inherit; cursor: pointer; box-shadow: 0 6px 18px rgba(244,122,31,0.38); transition: transform .12s; }
+  .save-btn:active { transform: scale(0.98); }
+  .cancel-btn { width: 100%; margin-top: 0.6rem; padding: 0.7rem; border: none; background: none; color: var(--text-muted);
+    font-family: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+  .privacy { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 1rem; line-height: 1.5; }
+
+  /* ── Test interactivo (prueba) ── */
+  #testOverlay .sheet { min-height: 600px; display: flex; flex-direction: column; }
+  .test-progress { width: 100%; height: 6px; background: #eef1f5; border-radius: 999px; overflow: hidden; margin-bottom: 1rem; }
+  .test-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--orange), var(--orange-2)); border-radius: 999px; transition: width .3s ease; }
+  .test-count { font-size: 0.74rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  #testQuestion { min-height: 4.6rem; display: flex; align-items: center; }
+  .test-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.2rem; margin-bottom: 0.6rem; flex: 1; }
+  .test-opt { display: flex; align-items: center; gap: 0.7rem; width: 100%; padding: 0.75rem 0.9rem; border: 1.5px solid #eef1f5;
+    border-radius: 13px; background: #fafbfd; cursor: pointer; font-family: inherit; text-align: left; transition: transform .1s ease, border-color .15s; }
+  .test-opt:active { transform: scale(0.98); border-color: var(--orange); }
+  .test-opt .dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
+  .test-opt .lbl { font-size: 0.86rem; font-weight: 600; color: var(--text); }
+  .wa-send-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+  .wa-send-btn svg { width: 18px; height: 18px; }
+
+  /* Multi-choice y rating-grid (Test Perelli SP) */
+  .test-opt.sel { border-color: var(--orange); background: #fff8f3; }
+  .test-next-btn { width: 100%; margin-top: auto; padding: 0.85rem; border: none; border-radius: 13px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; font-weight: 700; font-size: 0.92rem;
+    font-family: inherit; cursor: pointer; box-shadow: 0 4px 14px rgba(244,122,31,0.32); transition: transform .12s; }
+  .test-next-btn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
+  .test-next-btn:not(:disabled):active { transform: scale(0.98); }
+  /* Pie del test: Atrás + Cancelar */
+  .test-foot { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
+  .test-foot .cancel-btn { flex: 1; margin-top: 0; text-align: center; }
+  .back-btn { padding: 0.65rem 0.9rem; border: 1.5px solid #e0e4ec; background: #f5f6f9;
+    color: var(--text-muted); border-radius: 12px; font-family: inherit; font-size: 0.82rem;
+    font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .back-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  /* Tabla de impacto (Perelli SP) */
+  .rtable { display: flex; flex-direction: column; flex: 1; }
+  .rtable-head, .rtable-row { display: grid; grid-template-columns: 1fr repeat(5, 32px); gap: 4px; align-items: center; }
+  .rtable-head { padding-bottom: 0.45rem; border-bottom: 2px solid #eef1f5; margin-bottom: 0.15rem; }
+  .rtable-hcell { font-size: 0.58rem; font-weight: 700; text-align: center; line-height: 1.2; word-break: break-word; }
+  .rtable-lbl { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+  .rtable-row { padding: 0.4rem 0; border-bottom: 1px solid #eef1f5; }
+  .rtable-row:last-child { border-bottom: none; }
+  .rtable-cell { width: 32px; height: 32px; border-radius: 7px; border: 2px solid #e0e4ec;
+    background: transparent; cursor: pointer; transition: all .12s; padding: 0; }
+  .rtable-cell.on { background: var(--cell-color); border-color: var(--cell-color); }
+  .rtable-cell:not(.on):hover { border-color: var(--cell-color); }
+  /* Input "Otros" dentro de multi-selección */
+  .otros-input-wrap { margin-top: 0.4rem; }
+  .otros-input { width: 100%; padding: 0.65rem 0.85rem; border: 1.5px solid #e0e4ec; border-radius: 11px;
+    font-family: inherit; font-size: 0.86rem; color: var(--text); background: #fafbfd; }
+  .otros-input:focus { outline: none; border-color: var(--orange); }
+  /* Comentario opcional (KSS) */
+  .kss-comment { width: 100%; padding: 0.8rem 0.9rem; border: 1.5px solid #e0e4ec; border-radius: 13px;
+    font-family: inherit; font-size: 0.86rem; color: var(--text); background: #fafbfd;
+    resize: none; line-height: 1.5; margin-bottom: 0.6rem; }
+  .kss-comment:focus { outline: none; border-color: var(--orange); }
+
+  /* ── iOS / Android modal ── */
+  .ios-modal { position: fixed; inset: 0; z-index: 1001; background: rgba(0,0,0,0.6); display: none;
+    align-items: flex-end; justify-content: center; padding: 1rem; animation: fadeIn .25s ease; }
+  .ios-modal.show { display: flex; }
+  .ios-card { background: #fff; color: var(--text); width: 100%; max-width: 410px; border-radius: 22px; padding: 1.5rem 1.4rem;
+    position: relative; box-shadow: 0 14px 44px rgba(0,0,0,0.3); animation: slideUp .3s ease; }
+  .stack .ios-card { max-width: none; }   /* dentro de .stack debe igualar el ancho del botón de arriba */
+  .ios-card .x { position: absolute; top: 1rem; right: 1rem; width: 30px; height: 30px; border: none; border-radius: 50%;
+    background: #f0f2f5; color: var(--text-soft); font-weight: 700; cursor: pointer; }
+  .ios-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .ios-card p { font-size: 0.84rem; color: var(--text-soft); margin-bottom: 0.9rem; }
+  .ios-card ol { margin-left: 1.1rem; font-size: 0.85rem; line-height: 1.9; }
+  .ios-card svg { vertical-align: middle; color: #007aff; }
+
+  /* ── Toast ── */
+  .toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%) translateY(calc(100% + 2.5rem));
+    background: #16233d; color: #fff; padding: 0.7rem 1.1rem; border-radius: 12px; font-size: 0.84rem; font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35); z-index: 1100; display: flex; align-items: center; gap: 0.5rem;
+    opacity: 0; visibility: hidden; pointer-events: none; max-width: 90vw; cursor: pointer;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s ease, visibility 0s linear .35s; }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; pointer-events: auto;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s ease, visibility 0s; }
+  .toast svg { width: 16px; height: 16px; color: #38d39f; flex-shrink: 0; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* ── Calma overlay ── */
+  .calma-sheet { text-align: center; }
+  .calma-emoji { font-size: 2.8rem; margin-bottom: 0.5rem; }
+  .calma-msg { font-size: 0.88rem; color: var(--text-soft); line-height: 1.65; margin: 0.6rem 0 1.4rem; white-space: pre-line; text-align: left; }
+  .breath-wrap { position: relative; width: 88px; height: 88px; margin: 0 auto 1.5rem; }
+  .breath-ring { width: 100%; height: 100%; border-radius: 50%; background: rgba(244,122,31,0.12);
+    border: 3px solid var(--orange); animation: breathe 8s ease-in-out infinite; }
+  .breath-lbl { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 0.72rem; font-weight: 700; color: var(--orange); white-space: nowrap; pointer-events: none; }
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.82); opacity: 0.55; }
+    50%       { transform: scale(1.18); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="app" style="display:none;">
+
+  <header class="hero">
+    <div class="logo-box"><img src="logo.png" alt="Silva Salud"></div>
+    <h1>Silva Salud</h1>
+    <p>Ante el terremoto en Caracas, te acompañamos a manejar tu ansiedad, el estrés y el agotamiento. Tocá cómo te sentís y EVA te asistirá de inmediato.</p>
+  </header>
+
+  <div class="portal-name" id="portalName">Hola</div>
+
+  <main id="sections"></main>
+
+
+  <footer class="foot">
+
+    <div class="profile-chip">
+      <div class="pc-avatar" id="pcAvatar">–</div>
+      <div class="pc-text">
+        <div class="pc-name" id="pcName">—</div>
+        <div class="pc-emp" id="pcEmp">—</div>
+      </div>
+      <button class="pc-edit" onclick="openSetup(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>
+        Editar
+      </button>
+    </div>
+
+    <button id="installBtn" class="install">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <div class="tx"><span class="tt">Instalar la app</span><span class="ds">Añadir Silva Síntomas a tu inicio</span></div>
+    </button>
+
+    <div class="fbrand">AEROAMBULANCIA SILVA</div>
+    <div class="fnote">Portal de Apoyo Emocional · Crisis Sísmica Caracas · IA EVA</div>
+    <span class="ver" id="verTag">Versión 1.0</span>
+  </footer>
+
+</div>
+
+<!-- Consentimiento (primera vez) -->
+<div class="overlay" id="consent">
+  <div class="sheet">
+    <h2>Consentimiento para Evaluación de Bienestar Emocional</h2>
+    <p class="lead">Al participar, autorizás el tratamiento de tus datos personales relacionados con las evaluaciones de salud mental y bienestar en el contexto de la emergencia sísmica.</p>
+    <h3 class="consent-sub">Tu privacidad es nuestra prioridad</h3>
+    <p class="consent-text"><strong>Confidencialidad:</strong> Toda la información recolectada será tratada de forma estrictamente confidencial.</p>
+    <p class="consent-text"><strong>Uso:</strong> Los datos se utilizarán exclusivamente para brindarte asistencia emocional y orientación de bienestar durante la crisis.</p>
+    <p class="consent-text"><strong>Voluntariedad:</strong> Tu participación es voluntaria y podés retirar tu consentimiento en cualquier momento sin penalización.</p>
+    <p class="consent-text">Al tocar "Aceptar y continuar" confirmás que leíste esta información y otorgás tu consentimiento expreso.</p>
+    <button class="save-btn" onclick="acceptConsent()">Aceptar y continuar</button>
+  </div>
+</div>
+
+<!-- Setup overlay -->
+<div class="overlay" id="setup">
+  <div class="sheet">
+    <h2 id="setupTitle">Bienvenido 👋</h2>
+    <p class="lead" id="setupLead">Antes de empezar, completá tus datos. Quedan guardados en este dispositivo y se usan para identificarte ante EVA en cada reporte.</p>
+    <div class="field" id="fName">
+      <label for="inName">Nombre y apellido</label>
+      <input id="inName" type="text" autocomplete="name" placeholder="Ej: Juan Pérez" maxlength="60">
+      <div class="err">Por favor ingresá tu nombre y apellido.</div>
+    </div>
+    <div class="field" id="fCed">
+      <label for="inCed">Número de cédula</label>
+      <input id="inCed" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej: 12.345.678" maxlength="20">
+      <div class="err">Por favor ingresá tu número de cédula.</div>
+    </div>
+    <div class="field" id="fEmp">
+      <label for="inEmp">Empresa</label>
+      <input id="inEmp" type="text" autocomplete="organization" placeholder="Ej: Aerolíneas del Sur" maxlength="60">
+      <div class="err">Por favor ingresá tu empresa.</div>
+    </div>
+    <div class="field" id="fDep">
+      <label for="inDep">Departamento</label>
+      <input id="inDep" type="text" autocomplete="off" placeholder="Ej: Operaciones de Vuelo" maxlength="60">
+      <div class="err">Por favor ingresá tu departamento.</div>
+    </div>
+    <div class="field" id="fCargo">
+      <label for="inCargo">Cargo</label>
+      <input id="inCargo" type="text" autocomplete="organization-title" placeholder="Ej: Piloto" maxlength="60">
+    </div>
+    <div class="field" id="fSexo">
+      <label for="inSexo">Sexo</label>
+      <select id="inSexo">
+        <option value="">— Seleccionar —</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Prefiero no indicar">Prefiero no indicar</option>
+      </select>
+      <span class="err">Campo requerido</span>
+    </div>
+    <div class="field" id="fEdad">
+      <label for="inEdad">Edad</label>
+      <input id="inEdad" type="number" inputmode="numeric" min="18" max="99" placeholder="Ej: 35" maxlength="3">
+      <span class="err">Campo requerido</span>
+    </div>
+    <div class="field" id="fTelefono">
+      <label for="inTelefono">Teléfono</label>
+      <input id="inTelefono" type="tel" autocomplete="tel" placeholder="Ej: +58 412 1234567" maxlength="20">
+      <span class="err">Campo requerido</span>
+      <div class="err">Por favor ingresá tu cargo.</div>
+    </div>
+    <button class="save-btn" onclick="saveProfile()">Guardar y continuar</button>
+    <button class="cancel-btn" id="cancelBtn" onclick="closeSetup()" style="display:none;">Cancelar</button>
+    <p class="privacy">🔒 Tus datos no se envían a ningún servidor. Se guardan solo en tu teléfono.</p>
+  </div>
+</div>
+
+<!-- iOS install modal -->
+<div class="ios-modal" id="iosModal">
+  <div class="ios-card">
+    <button class="x" onclick="hide('iosModal')">✕</button>
+    <h3>Instalar en iPhone</h3>
+    <p>Funciona en Safari y también en Chrome. Para agregar esta app a tu pantalla de inicio:</p>
+    <ol>
+      <li>Tocá el botón <strong>Compartir</strong>
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        (en Safari está abajo en el centro; en Chrome, arriba a la derecha).</li>
+      <li>Deslizá y elegí <strong>"Agregar a inicio"</strong>
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Android install modal (guía si Chrome no ofrece el instalador nativo en el momento) -->
+<div class="ios-modal" id="androidModal">
+  <div class="ios-card">
+    <button class="x" onclick="hide('androidModal')">✕</button>
+    <h3>Instalar en Android</h3>
+    <p>Si no apareció el cartel de instalación automático:</p>
+    <ol>
+      <li>Tocá el menú <strong>⋮</strong> (arriba a la derecha del navegador).</li>
+      <li>Elegí <strong>"Instalar app"</strong> o <strong>"Agregar a pantalla principal"</strong>.</li>
+      <li>Confirmá tocando <strong>"Agregar"</strong>.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Test interactivo dentro de la app (prueba — si no convence, se sacan estos 30 líneas y el botón vuelve a abrir WhatsApp directo) -->
+<div class="overlay" id="testOverlay">
+  <div class="sheet">
+    <div class="test-progress"><div class="test-progress-bar" id="testProgressBar"></div></div>
+    <p class="test-count" id="testCount">Pregunta 1 de 15</p>
+    <h2 id="testQuestion">—</h2>
+    <div class="test-options" id="testOptions"></div>
+    <div class="test-foot">
+      <button class="back-btn" id="testBackBtn" disabled onclick="retrocederTest()">← Atrás</button>
+      <button class="cancel-btn" onclick="cerrarTest()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay de calma (post-test / post-tap) -->
+<div class="overlay" id="calmaOverlay">
+  <div class="sheet calma-sheet">
+    <div class="calma-emoji">💙</div>
+    <h2 id="calmaTitle" style="font-size:1.15rem;margin-bottom:0.3rem">Un momento</h2>
+    <p class="calma-msg" id="calmaMsg"></p>
+    <div class="breath-wrap">
+      <div class="breath-ring"></div>
+      <span class="breath-lbl" id="breathLbl">4 · 4 · 4</span>
+    </div>
+    <button class="save-btn wa-send-btn" id="calmaWaBtn" onclick="abrirDesdeCalma()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Ver mi guía en WhatsApp
+    </button>
+    <button class="cancel-btn" onclick="cerrarCalma()">Cerrar</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ════════════════ CONFIG ════════════════ */
+const APP_VERSION = '1.0';                  // ← Subí este número en cada actualización
+const EVA_PHONE   = '584129089379';        // WhatsApp de EVA
+const LINK_TRYVITAL = 'https://link.tryvital.io/?token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImM1Y2E4OGEyMzQxZDQ1M2U0MzU1YTIzZjNiOTZhNWEzMjdjOTY3NDciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiAiaWQtc2lnbmVyLXN0Zy11c0B2aXRhbC1pZC1zdGctdXMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAiYXVkIjogImh0dHBzOi8vYXBpLnNhbmRib3gudHJ5dml0YWwuaW8vdjIvbGluayIsICJpYXQiOiAxNzc5ODM5OTMwLCAiZXhwIjogMTc3OTg0MzUzMCwgInN1YiI6ICJhMThlYTYyMi1mNWMzLTRjZjMtYTc4YS1lZWQxMTM2MzNhZjciLCAidXNlcl9pZCI6ICI5NDhmMTEyNy02OWFiLTQ0MGUtOWRiOS1iN2ZlYTNjZDg1NGMiLCAidGVhbV9pZCI6ICJkMjQ1NTMxNC03YzAxLTRkZGUtYTVhMy0wODg4ZGMwNTJhN2UifQ.J5LDp87fJjSUv9mdmK4HVx3R8GqfnQgk9ue3osPVTR7U2kGszk0IWhmpzufoeW_yViurWjkK71dZzUuJuu1iLBHjy9xKD8IrUvqrTAFKkCtP7cCnKB9ZzwCyugfg8liNsDrx7oXFKGpyLcmeQMrR5rez4nHQC8M8Gqh7nKz3QGcX3wSsQK3U0MBpz4_NLnXYJNwM6zfM2vpmUkyfn7-tpTDZ5YqIrPR4-0rac4p5UXkNQ475a3UWWSG8oMwNN7n_J3sYCwwV1l4JDypIzuDTZsdyU5NVOoljEnFSzqC5an-XQU1CDzALs6UPNpRr-m4RjKYxMDpEPDsPw7njwooZOw&env=sandbox&region=us'; // Link de vinculación TryVital (wearables)
+
+// Iconos SVG reutilizables
+const I = {
+  homeOut:  '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/><path d="M16 6h5M18.5 3.5 21 6l-2.5 2.5"/>',
+  planeIn:  '<path d="M2 22h20"/><path d="M3.5 16.5 21 11l-1-3-5 1-6-6-2 .6 3.5 5.4-4 1.2-2-1.5-1.5.5z"/>',
+  planeOut: '<path d="M2 22h20"/><path d="M22 11 4 16l1-3 5-1 4-7 2 .5-2 6.5 4-1 1.5-2 1.5.5z"/>',
+  homeIn:   '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>',
+  moon:     '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  bed:      '<path d="M2 18v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"/><path d="M2 18h20"/><path d="M6 11V8a2 2 0 0 1 2-2h3v5"/><path d="M22 11V8"/>',
+  battery:  '<rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><line x1="6" y1="11" x2="6" y2="13"/>',
+  bolt:     '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  brain:    '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44A2.5 2.5 0 0 1 4 17.5a2.5 2.5 0 0 1-.95-4.81A2.5 2.5 0 0 1 4 8a2.5 2.5 0 0 1 2.96-3.44A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44A2.5 2.5 0 0 0 20 17.5a2.5 2.5 0 0 0 .95-4.81A2.5 2.5 0 0 0 20 8a2.5 2.5 0 0 0-2.96-3.44A2.5 2.5 0 0 0 14.5 2z"/>',
+  dizzy:    '<circle cx="12" cy="12" r="10"/><path d="M8 16s1.5-2 4-2 4 2 4 2"/><path d="m7.5 8 3 3M10.5 8l-3 3M13.5 8l3 3M16.5 8l-3 3"/>',
+  sad:      '<circle cx="12" cy="12" r="10"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/>',
+  pill:     '<rect x="3" y="8" width="18" height="8" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/>'
+};
+
+/* ════════════════ SECCIONES ════════════════ */
+const SECTIONS = [
+  {
+    id:'sensaciones', title:'¿Cómo te sentís?', sub:'Tocá lo que estás experimentando ahora mismo', layout:'grid',
+    items:[
+      {id:'sen_cansancio',   label:'Cansancio',        desc:'Agotamiento físico',      icon:I.battery, ic:'#fff1e6', icc:'#f47a1f', msg:'Registro una sensación de *Cansancio / Fatiga* en este momento.'},
+      {id:'sen_estres',      label:'Estrés',           desc:'Test de Estrés',          icon:I.bolt,    ic:'#feecec', icc:'#e0322f', msg:'Por favor, asísteme e iniciá el *Test de Estrés* para registrar mi nivel actual.', testFlow:'estres'},
+      {id:'sen_ansiedad',    label:'Ansiedad',         desc:'Test de Ansiedad',        icon:I.brain,   ic:'#f0ebfa', icc:'#7c5cc4', msg:'Por favor, asísteme e iniciá el *Test de Ansiedad (BAI)* para registrar mi nivel actual.', testFlow:'ansiedad'},
+      {id:'sen_malestar',    label:'Malestar',         desc:'Indisposición física',    icon:I.dizzy,   ic:'#e7eefb', icc:'#2d6cdf', msg:'Registro una sensación de *Malestar / Indisposición Física* en este momento.'},
+      {id:'sen_somnoliencia',label:'Somnoliencia',     desc:'Test de Somnolencia',     icon:I.moon,    ic:'#e7eefb', icc:'#2d6cdf', msg:'Por favor, asísteme e iniciá el *Test de Somnolencia (Escala KSS)* de inmediato.', testFlow:'kss'},
+      {id:'sen_fatiga',      label:'Fatiga',           desc:'Test de Fatiga',          icon:I.bed,     ic:'#e7eefb', icc:'#2d6cdf', msg:'Por favor, asísteme e iniciá el *Test de Fatiga (Perelli SP)* de inmediato.', testFlow:'perelli'},
+      {id:'sen_depresion',   label:'Depresión',        desc:'Test de Depresión',       icon:I.sad,     ic:'#eceefc', icc:'#4338ca', msg:'Por favor, asísteme e iniciá el *Test de Depresión* de inmediato.', testFlow:'depresion'},
+      {id:'sen_gastro',      label:'Gastrointestinal', desc:'Test Gastrointestinal',   icon:I.pill,    ic:'#e8f5e9', icc:'#2e7d32', msg:'Por favor, asísteme e iniciá el *Test Gastrointestinal* para registrar mi condición actual.', testFlow:'gastro'}
+    ]
+  }
+];
+
+/* ════════════════ STORAGE ════════════════ */
+const K_PROFILE = 'silva_sintomas_profile_v1';
+const K_REPORTS = 'silva_sintomas_reports_v1';
+const K_CONSENT = 'silva_sintomas_consent_v1';
+
+// Google Sheets webhooks (Apps Script desplegado como aplicación web)
+const SHEETS_KSS_URL   = 'https://script.google.com/macros/s/AKfycbxkksBqTDMqXlN6BtCfgdvau1Jgd98CIp-klJ28NcKpDBFILmM1trgFm1ngW-rKMxDtVg/exec';
+const SHEETS_ESTRES_URL   = 'https://script.google.com/macros/s/AKfycbw357Ohz9OWgGoyIF_HBEbiriGY92Qs6T_cIEVbP2bgshlI5Sh0_mXel_FO90rzJ_tV/exec';
+const SHEETS_ANSIEDAD_URL     = 'https://script.google.com/macros/s/AKfycbzxMKyyeschmPakyMiTOVXAXWTuW2_QAPLG2Hw6_ZAoQDQXN_15EEOhRbmetBIwkGSs/exec';
+const SHEETS_OPERACIONAL_URL  = 'https://script.google.com/macros/s/AKfycbzPyz40zNGQE0uiDHGYPuO8ZGzKipBVHNSe1JjAp6LfquPBiF8RVDQZKFeGNQpXxoOGZw/exec';
+const SHEETS_GASTRO_URL       = 'https://script.google.com/macros/s/AKfycby-J2oLAYKPQwYe-2Dr2thcbKnd8U4EMLx6NohZTncQV2eNyBJpy0JhNFcKsSNx0c-B/exec';
+const SHEETS_DEPRESION_URL    = 'https://script.google.com/macros/s/AKfycbwaquR7YhfSZ1BwVvfetcyRlUEAQhTpkWmDm7d_VGFAjhqeeGQJvJhX8-OIVHR-Wklx/exec';
+const SHEETS_PERELLI_URL      = 'https://script.google.com/macros/s/AKfycbx5LdYyTEBNFS-ZvOsc9Jzzf41wbWHS7hYoqJLfp9nu53ZuA058hKfChkjuHVQxAeb-hA/exec';
+
+function hasConsent(){ try { return localStorage.getItem(K_CONSENT) === '1'; } catch(e){ return false; } }
+function acceptConsent(){ try { localStorage.setItem(K_CONSENT, '1'); } catch(e){} document.getElementById('consent').classList.remove('show'); openSetup(false); }
+
+function getProfile(){ try { return JSON.parse(localStorage.getItem(K_PROFILE)) || null; } catch(e){ return null; } }
+function setProfile(p){ localStorage.setItem(K_PROFILE, JSON.stringify(p)); }
+
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function getReports(){
+  let r; try { r = JSON.parse(localStorage.getItem(K_REPORTS)) || {}; } catch(e){ r = {}; }
+  const t = todayStr(); let changed = false;
+  for (const id in r){ if (r[id].date !== t){ delete r[id]; changed = true; } }   // reset diario
+  if (changed) localStorage.setItem(K_REPORTS, JSON.stringify(r));
+  return r;
+}
+function saveReports(r){ localStorage.setItem(K_REPORTS, JSON.stringify(r)); }
+
+/* ════════════════ MENSAJES ════════════════ */
+function buildMessage(item){
+  const p = getProfile() || {nombre:'', empresa:'', cedula:'', departamento:'', cargo:''};
+  const base = `Hola EVA. Soy ${p.nombre}, ${p.cedula}, de ${p.empresa}, ${p.departamento}, ${p.cargo}. `;
+  return base + item.msg;
+}
+function waUrl(item){
+  return `https://api.whatsapp.com/send/?phone=${EVA_PHONE}&text=${encodeURIComponent(buildMessage(item))}&type=phone_number&app_absent=0`;
+}
+function enviarOperacional(campo){
+  if (!SHEETS_OPERACIONAL_URL || !campo) return;
+  const p = getProfile() || {};
+  fetch(SHEETS_OPERACIONAL_URL + '?' + new URLSearchParams({
+    nombre: p.nombre||'', empresa: p.empresa||'', dpto: p.departamento||'',
+    sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'', campo
+  }), { mode:'no-cors' }).catch(() => {});
+}
+
+/* ════════════════ CALMA OVERLAY ════════════════ */
+const ITEM_CATEGORY = {
+  sen_ansiedad:     'panico',
+  sen_malestar:     'panico',
+  sen_estres:       'panico',
+  sen_cansancio:    'agotamiento',
+  sen_fatiga:       'agotamiento',
+  sen_somnoliencia: 'agotamiento',
+  sen_depresion:    'agotamiento',
+  sen_gastro:       'gastro'
+};
+
+const FLYER_PANTALLA = {
+  panico:     (n) => `Abrazo digital, ${n}. Lo que sentís es una respuesta normal de tu cuerpo ante el peligro. Vamos a calmar tu sistema nervioso juntos.\n\nHacé esto ahora: inhalá 4 segundos → retené 4 → exhalá 4. Repetilo mientras abrís el WhatsApp que te acabamos de preparar.`,
+  agotamiento:(n) => `Registrado, ${n}. Estar en alerta constante durante días agota más que correr un maratón. Tu fatiga es real y tu cuerpo te está pidiendo desconexión segura.\n\nAbrí el WhatsApp para ver cómo recuperar energía sin descuidar tu seguridad.`,
+  gastro:     (n) => `Entendido, ${n}. El sistema digestivo es nuestro "segundo cerebro". Cuando hay miedo colectivo, el estómago reacciona de inmediato.\n\nTe preparamos indicaciones médicas y emocionales sencillas en tu WhatsApp.`
+};
+
+// TODO: reemplazar [NÚMERO DE EMERGENCIA] con el número real (ej: +58 212 xxx xxxx)
+const FLYER_WA = {
+  panico: `
+
+---
+🦅 *Silva Salud · Guía de Emergencia ante la Ansiedad y Réplicas*
+
+Llevamos días de mucha tensión en Caracas y es completamente normal sentir miedo o pánico con cada réplica. Tu cuerpo está en modo "supervivencia". Aquí tenés tus instrucciones de calma:
+
+*1. Anclá tu mente al presente (Técnica 3-3-3):*
+Si sentís que el pánico te domina, mirá a tu alrededor y nombrá en voz alta:
+• 3 cosas que puedas ver
+• 3 sonidos que puedas escuchar
+• Mové 3 partes de tu cuerpo (brazos, tobillos, hombros)
+Esto le avisa a tu cerebro que estás a salvo *aquí y ahora*.
+
+*2. Protocolo ante una Réplica:*
+• No corras desesperadamente durante el movimiento
+• Alejate de ventanas, espejos u objetos que puedan caer
+• Si estás en un piso alto, ubicate en la zona estructural más segura (columnas)
+• Tené a mano tu bolso de emergencia (agua, linterna, cédula, cargador)
+
+*3. Filtrá la información:*
+Evitá ver videos de desastres o cadenas alarmistas. Informate solo 1–2 veces al día por fuentes oficiales.
+
+_Estamos contigo. Mantené la calma, esto también pasará._
+
+¿Tenés un familiar o vecino en pánico? Reenviale esta guía.
+🚨 Emergencias: [NÚMERO DE EMERGENCIA]`,
+
+  agotamiento: `
+
+---
+🦅 *Silva Salud · Gestión del Agotamiento Post-Sismo*
+
+Cuando pasamos días esperando una réplica, el cerebro produce cortisol y adrenalina sin parar. Cuando el nivel baja, aparece una *fatiga extrema, somnolencia o una sensación de desgano / tristeza*. Tu batería está en 5%.
+
+*1. Descanso en relevos:*
+Si vivís acompañado/a, organicen turnos de atención para la noche. Saber que alguien más está alerta te permitirá descansar profundamente unas horas.
+
+*2. Hidratación constante:*
+El estrés severo deshidrata las células del cerebro, empeorando la fatiga. Tomá pequeños sorbos de agua cada hora, aunque no tengas sed.
+
+*3. Validá tus emociones:*
+Es normal sentir ganas de llorar, desesperanza o apatía. No te exijás ser productivo/a al 100% en este momento. Tu prioridad es regular tu energía.
+
+_Tu cuerpo es sabio y se está defendiendo a través del descanso. Permitite parar en un lugar seguro._
+
+¿Tenés un familiar o vecino que lo necesita? Reenviale esta guía.
+🚨 Emergencias: [NÚMERO DE EMERGENCIA]`,
+
+  gastro: `
+
+---
+🦅 *Silva Salud · Alivio Gastrointestinal por Estrés de Crisis*
+
+Los sismos activan el sistema nervioso simpático, el cual corta la digestión para enviar sangre a los músculos. Esto causa náuseas, acidez, colon irritable o dolor estomacal.
+
+*1. Alimentación de crisis (48 hs):*
+Evitá el café en exceso, el picante, las grasas saturadas y los refrescos. Optá por comidas tibias: arroz, pollo a la plancha, galletas de soda o sopas claras.
+
+*2. Calor local y respiración diafragmática:*
+Colocá algo tibio sobre tu abdomen. Poné una mano en tu pecho y otra en el estómago; respirá haciendo que se mueva solo la mano del estómago. Esto relaja los músculos digestivos.
+
+*3. Infusiones aliadas:*
+Si tenés a la mano, tomá té de manzanilla, menta o malojillo. Ayudan a relajar los músculos estomacales contraídos por el susto.
+
+_Tu cuerpo está reflejando lo que tu mente está procesando. Cuidá tu alimentación mientras vuelve la calma._
+
+¿Tenés un familiar o vecino que lo necesita? Reenviale esta guía.
+🚨 Emergencias: [NÚMERO DE EMERGENCIA]`
+};
+
+let _calmaUrl = null, _calmaItemId = null;
+
+function mostrarCalma(waUrl, itemId, categoria, nombre){
+  _calmaUrl = waUrl;
+  _calmaItemId = itemId;
+  const primerNombre = (nombre || '').split(' ')[0] || 'querido/a';
+  const fn = FLYER_PANTALLA[categoria] || FLYER_PANTALLA.panico;
+  document.getElementById('calmaMsg').textContent = fn(primerNombre);
+  document.getElementById('calmaOverlay').classList.add('show');
+}
+function abrirDesdeCalma(){
+  if (_calmaUrl) window.open(_calmaUrl, '_blank');
+  if (_calmaItemId) mark(_calmaItemId);
+  cerrarCalma();
+}
+function cerrarCalma(){
+  document.getElementById('calmaOverlay').classList.remove('show');
+  _calmaUrl = null; _calmaItemId = null;
+}
+
+function buildCalmaUrl(item, extraMsg){
+  const cat = ITEM_CATEGORY[item.id] || 'panico';
+  const enriched = { ...item, msg: item.msg + (FLYER_WA[cat] || '') };
+  return waUrl(enriched);
+}
+
+/* ════════════════ WEARABLES (TRYVITAL) ════════════════ */
+function activarFlujoApple(){
+  const guia = document.getElementById('guiaApple');
+  guia.hidden = !guia.hidden;
+  document.getElementById('appleChev').style.transform = guia.hidden ? '' : 'rotate(180deg)';
+  if (!guia.hidden) guia.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function redirigirATryVital(){
+  window.open(LINK_TRYVITAL, '_blank');
+}
+
+/* ════════════════ RENDER ════════════════ */
+const checkSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+const chevSVG  = '<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>';
+const undoSVG  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>';
+const waSVG    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M9.5 13.5l4-4"/><path d="M10 9.2h3.5v3.5"/></svg>';
+
+function renderSections(){
+  const root = document.getElementById('sections');
+  root.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const s = document.createElement('section');
+    s.className = 'section';
+    s.innerHTML = `<div class="sec-head"><div class="sec-title"><span class="dot"></span>${sec.title}</div><div class="sec-sub">${sec.sub}</div></div>`;
+    const cont = document.createElement('div');
+    cont.className = sec.layout === 'grid' ? 'grid2' : 'stack';
+    sec.items.forEach((it, i) => cont.appendChild(buildItem(it, sec.layout, i)));
+    s.appendChild(cont);
+    root.appendChild(s);
+  });
+  refreshStates();
+}
+
+function buildItem(it, layout, i){
+  const wrap = document.createElement('div');
+  wrap.className = 'item';
+  wrap.dataset.id = it.id;
+
+  const a = document.createElement('a');
+  a.className = layout === 'grid' ? 'tile' : 'rbtn';
+  if (it.testFlow){
+    a.href = 'javascript:void(0)';
+  } else {
+    a.href = waUrl(it);
+    a.target = '_blank';
+    a.rel = 'noopener';
+  }
+
+  const iconHtml = `<div class="ic" style="background:${it.ic};color:${it.icc}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${it.icon}</svg></div>`;
+  const badge = `<span class="badge" data-badge>${checkSVG}Hecho · <span data-time></span></span>`;
+
+  if (layout === 'grid'){
+    a.innerHTML = `${iconHtml}<div class="tt">${it.label}</div><div class="ds">${it.desc}</div>${badge}`;
+  } else {
+    a.innerHTML = `${iconHtml}<div class="tx"><span class="tt">${it.label}</span><span class="ds">${it.desc}</span></div><div class="st">${badge}${chevSVG}</div>`;
+  }
+
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (it.testFlow){ abrirTest(it); return; }
+    const cat = ITEM_CATEGORY[it.id] || 'panico';
+    const p = getProfile() || {};
+    mostrarCalma(buildCalmaUrl(it), it.id, cat, p.nombre || '');
+  });
+
+  const wa = document.createElement('span');
+  wa.className = 'wa-flag';
+  wa.innerHTML = waSVG;
+  wa.title = 'Se notifica por WhatsApp';
+
+  const undo = document.createElement('button');
+  undo.className = 'undo';
+  undo.innerHTML = undoSVG;
+  undo.title = 'Marcar como no enviado';
+  undo.setAttribute('aria-label', 'Marcar como no enviado');
+  undo.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); unmark(it.id); });
+
+  a.appendChild(wa);     // ícono de WhatsApp, mismo lugar que el "deshacer" tras marcar Hecho
+  a.appendChild(undo);   // queda dentro de la tarjeta blanca, no afuera
+  wrap.appendChild(a);
+  return wrap;
+}
+
+function mark(id){
+  const r = getReports();
+  const d = new Date();
+  const time = String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  r[id] = { date: todayStr(), time, ts: d.getTime() };
+  saveReports(r);
+  setTimeout(refreshStates, 60);           // tras abrir WhatsApp
+  showToast('Reporte registrado · ' + time);
+}
+function unmark(id){
+  const r = getReports();
+  delete r[id];
+  saveReports(r);
+  refreshStates();
+}
+
+/* ════════════════ TEST INTERACTIVO (PRUEBA) ════════════════ */
+const TEST_DEPRESION = [
+  'Estado de ánimo bajo (tristeza, desánimo, sensación de inutilidad)',
+  'Sensación de culpa',
+  'Pensamientos sobre la muerte o sobre hacerte daño',
+  'Insomnio o problemas para dormir',
+  'En tu trabajo y actividades: fatiga, debilidad o pérdida de interés en lo que hacés',
+  'Lentitud para pensar o hablar, dificultad para concentrarte, menor actividad',
+  'Agitación o inquietud',
+  'Tensión interna, irritabilidad o preocupación por pequeñas cosas',
+  'Signos físicos de ansiedad (boca seca, palpitaciones, dolor de cabeza, suspiros, sudoración)',
+  'Molestias gastrointestinales o digestivas',
+  'Molestias físicas generales (pesadez, dolores corporales, falta de energía)',
+  'Cambios en el deseo sexual o alteraciones menstruales',
+  'Preocupación excesiva por tu salud',
+  'Pérdida de peso',
+  'Conciencia de cómo te estás sintiendo'
+];
+const TEST_ESCALA  = ['Nunca','Pocas veces al año o menos','Una vez al mes o menos','Unas pocas veces al mes','Una vez a la semana','Unas pocas veces a la semana','Todos los días'];
+const TEST_COLORES = ['#1aa672','#5fb84a','#a3c925','#e8c400','#f0930f','#f2640f','#e0322f'];
+
+let testItem = null, testIdx = 0, testRespuestas = [];
+let perelliState = null;
+let kssState = null;
+let estresState = null;
+let ansiedadState = null;
+let gastroState = null;
+
+function abrirTest(it){
+  document.getElementById('testOverlay').classList.add('show');
+  if (it.testFlow === 'perelli'){
+    perelliState = { item:it, stepIdx:0, answers:[], currentMultiSelected:new Set(), currentGridRatings:{} };
+    renderPerelliStep();
+  } else if (it.testFlow === 'kss'){
+    kssState = { item:it, stepIdx:0, answers:[] };
+    renderKssStep();
+  } else if (it.testFlow === 'estres'){
+    estresState = { item:it, stepIdx:0, answers:[] };
+    renderEstresStep();
+  } else if (it.testFlow === 'ansiedad'){
+    ansiedadState = { item:it, stepIdx:0, answers:[] };
+    renderAnsiedadStep();
+  } else if (it.testFlow === 'gastro'){
+    gastroState = { item:it, stepIdx:0, answers:[] };
+    renderGastroStep();
+  } else {
+    testItem = it; testIdx = 0; testRespuestas = [];
+    renderTestPaso();
+  }
+}
+function cerrarTest(){
+  document.getElementById('testOverlay').classList.remove('show');
+  testItem = null; perelliState = null; kssState = null; estresState = null; ansiedadState = null; gastroState = null;
+}
+function updateBackBtn(enabled){
+  const btn = document.getElementById('testBackBtn');
+  if (btn) btn.disabled = !enabled;
+}
+function retrocederTest(){
+  if (perelliState !== null){
+    if (perelliState.stepIdx > 0){ perelliState.stepIdx--; perelliState.answers.pop(); renderPerelliStep(); }
+  } else if (kssState !== null){
+    if (kssState.stepIdx > 0){ kssState.stepIdx--; kssState.answers.pop(); renderKssStep(); }
+  } else if (estresState !== null){
+    if (estresState.stepIdx > 0){ estresState.stepIdx--; estresState.answers.pop(); renderEstresStep(); }
+  } else if (ansiedadState !== null){
+    if (ansiedadState.stepIdx > 0){ ansiedadState.stepIdx--; ansiedadState.answers.pop(); renderAnsiedadStep(); }
+  } else if (gastroState !== null){
+    if (gastroState.stepIdx > 0){ gastroState.stepIdx--; gastroState.answers.pop(); renderGastroStep(); }
+  } else if (testItem !== null){
+    if (testIdx > 0){ testIdx--; testRespuestas.pop(); renderTestPaso(); }
+  }
+}
+
+function renderTestPaso(){
+  const total = TEST_DEPRESION.length;
+  updateBackBtn(testIdx > 0);
+  document.getElementById('testCount').textContent = `Pregunta ${testIdx + 1} de ${total}`;
+  document.getElementById('testProgressBar').style.width = (testIdx / total * 100) + '%';
+  document.getElementById('testQuestion').textContent = TEST_DEPRESION[testIdx];
+  document.getElementById('testOptions').innerHTML = TEST_ESCALA.map((lbl, i) => `
+    <button type="button" class="test-opt" onclick="responderTest(${i})">
+      <span class="dot" style="background:${TEST_COLORES[i]}"></span>
+      <span class="lbl">${lbl}</span>
+    </button>`).join('');
+}
+function responderTest(valor){
+  testRespuestas.push(valor);
+  testIdx++;
+  if (testIdx >= TEST_DEPRESION.length) renderTestFinal();
+  else renderTestPaso();
+}
+function renderTestFinal(){
+  updateBackBtn(true);
+  document.getElementById('testCount').textContent = `Completaste las ${TEST_DEPRESION.length} preguntas`;
+  document.getElementById('testProgressBar').style.width = '100%';
+  document.getElementById('testQuestion').textContent = 'Listo. Tocá el botón para enviarle tus respuestas a EVA por WhatsApp.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarTest()">${waSVG}Enviar</button>`;
+}
+function finalizarTest(){
+  const resumen = TEST_DEPRESION.map((preg, i) => `${i + 1}. ${preg}: ${testRespuestas[i]} = ${TEST_ESCALA[testRespuestas[i]]}`).join('\n');
+  if (SHEETS_DEPRESION_URL) {
+    const p = getProfile() || {};
+    const params = new URLSearchParams({
+      nombre:p.nombre||'', id_piloto:p.id_piloto||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      sexo:p.sexo||'', edad:p.edad||'', telefono:p.telefono||''
+    });
+    testRespuestas.forEach((r, i) => params.set('s'+i, r + ' = ' + TEST_ESCALA[r]));
+    fetch(SHEETS_DEPRESION_URL + '?' + params, { mode:'no-cors' }).catch(() => {});
+  }
+  const _catDep = ITEM_CATEGORY[testItem.id] || 'agotamiento';
+  const _pDep = getProfile() || {};
+  const itemFinal = { ...testItem, msg: `Completé el *Test de Depresión* desde la web (escala 0 = nunca … 6 = todos los días). Estas son mis respuestas:\n\n${resumen}` + (FLYER_WA[_catDep]||'') };
+  document.getElementById('testOverlay').classList.remove('show');
+  mostrarCalma(waUrl(itemFinal), testItem.id, _catDep, _pDep.nombre || '');
+}
+
+// ── Fatiga · Perelli SP ───────────────────────────────────────────────────────
+const PERELLI_STEPS = [
+  {
+    type:'single', question:'¿En qué momento del día te encontrás?',
+    options:['Inicio del día (mañana)','A mitad del día','Tarde','Noche','En descanso']
+  },
+  {
+    type:'single', question:'¿Cómo calificarías tu estado general de fatiga actual?',
+    options:['1 = Completamente alerta, despierto/a','2 = Muy fresco/a, buen nivel de energía','3 = Bien, normal','4 = Un poco fatigado/a, rendimiento levemente afectado','5 = Moderadamente fatigado/a, esfuerzo para mantener la concentración','6 = Extremadamente fatigado/a, funcionamiento comprometido','7 = Completamente exhausto/a, capacidad operacional severamente afectada'],
+    colors:['#1aa672','#5fb84a','#a3c925','#e8c400','#f0930f','#f2640f','#e0322f']
+  },
+  {
+    type:'multi', question:'¿Qué síntomas de fatiga experimentas actualmente? Elige uno o varios.',
+    options:['Dificultad para concentrarte','Pesadez en los párpados','Bostezos frecuentes','Irritabilidad o cambios de humor','Dolores musculares','Visión borrosa o dificultad para enfocar','Lentitud en las reacciones','Ninguno de los anteriores'],
+    noneIdx:7
+  },
+  {
+    type:'rating-grid', question:'¿Cómo afecta tu fatiga actual a cada una de estas funciones?',
+    items:['Toma de decisiones','Comunicación','Concentración en tareas','Coordinación con el equipo','Manejo de situaciones difíciles'],
+    scale:5
+  },
+  {
+    type:'single', question:'¿Cómo fue la calidad de tu sueño en las últimas 24 h?',
+    options:['Excelente','Bueno','Regular','Malo','Muy malo'],
+    colors:['#1aa672','#5fb84a','#e8c400','#f0930f','#e0322f']
+  },
+  {
+    type:'multi', question:'¿Qué factores han contribuido más a tu fatiga actual? Elige uno o varios.',
+    options:['Horario de trabajo irregular','Vuelos nocturnos','Cambios de huso horario','Alta carga de trabajo','Estrés operacional','Factores personales o familiares','Condiciones ambientales (ruido, turbulencia)','Otros'],
+    otrosIdx:7
+  },
+  {
+    type:'single', question:'¿Cómo calificarías tu capacidad actual para realizar tus actividades habituales?',
+    options:['1 = Capacidad óptima','2 = Capacidad levemente reducida','3 = Capacidad moderadamente reducida','4 = Capacidad severamente reducida','5 = Incapacidad operacional'],
+    colors:['#1aa672','#5fb84a','#e8c400','#f0930f','#e0322f']
+  },
+  {
+    type:'text-input', question:'¿Tenés algún comentario adicional sobre tu estado actual?',
+    placeholder:'Opcional · máx. 200 caracteres', maxlength:200
+  }
+];
+
+function renderPerelliStep(){
+  const { stepIdx } = perelliState;
+  const step = PERELLI_STEPS[stepIdx];
+  const total = PERELLI_STEPS.length;
+  updateBackBtn(stepIdx > 0);
+  document.getElementById('testCount').textContent = `Pregunta ${stepIdx + 1} de ${total}`;
+  document.getElementById('testProgressBar').style.width = (stepIdx / total * 100) + '%';
+  document.getElementById('testQuestion').textContent = step.question;
+  perelliState.currentMultiSelected = new Set();
+  perelliState.currentGridRatings = {};
+  if (step.type === 'single') renderPerelliSingle(step);
+  else if (step.type === 'multi') renderPerelliMulti(step);
+  else if (step.type === 'rating-grid') renderPerelliGrid(step);
+  else if (step.type === 'text-input') renderPerelliTextInput(step);
+}
+function perelliAdvance(answer){
+  perelliState.answers.push(answer);
+  perelliState.stepIdx++;
+  if (perelliState.stepIdx >= PERELLI_STEPS.length) renderPerelliFinal();
+  else renderPerelliStep();
+}
+function renderPerelliSingle(step){
+  document.getElementById('testOptions').innerHTML = step.options.map((opt, i) => {
+    const bg  = step.colors ? step.colors[i] : '#c9d1df';
+    const lbl = opt.replace(/^\d+ = /, '');
+    return `<button type="button" class="test-opt" onclick="perelliPickSingle(${i})"><span class="dot" style="background:${bg}"></span><span class="lbl">${lbl}</span></button>`;
+  }).join('');
+}
+function perelliPickSingle(i){
+  perelliAdvance(PERELLI_STEPS[perelliState.stepIdx].options[i]);
+}
+function renderPerelliMulti(step){
+  const noneIdx = step.noneIdx !== undefined ? step.noneIdx : -1;
+  const opts = step.options.map((opt, i) =>
+    `<button type="button" class="test-opt" id="pmopt_${i}" onclick="perelliToggleMulti(${i},${noneIdx})"><span class="dot" style="background:#c9d1df" id="pmdot_${i}"></span><span class="lbl">${opt}</span></button>`
+  ).join('');
+  const otrosHtml = step.otrosIdx !== undefined
+    ? `<div class="otros-input-wrap" id="otrosInputWrap" style="display:none"><input type="text" id="otrosTxt" class="otros-input" maxlength="50" placeholder="¿Cuál? (máx. 50 caracteres)"></div>`
+    : '';
+  document.getElementById('testOptions').innerHTML = opts + otrosHtml +
+    `<button type="button" class="test-next-btn" id="perelliNextBtn" disabled onclick="perelliAdvanceMulti()">Siguiente →</button>`;
+}
+function perelliToggleMulti(idx, noneIdx){
+  const sel = perelliState.currentMultiSelected;
+  const step = PERELLI_STEPS[perelliState.stepIdx];
+  if (idx === noneIdx){ sel.clear(); sel.add(idx); }
+  else { if (sel.has(noneIdx)) sel.delete(noneIdx); sel.has(idx) ? sel.delete(idx) : sel.add(idx); }
+  step.options.forEach((_, i) => {
+    const btn = document.getElementById('pmopt_' + i);
+    const dot = document.getElementById('pmdot_' + i);
+    if (!btn) return;
+    btn.classList.toggle('sel', sel.has(i));
+    if (dot) dot.style.background = sel.has(i) ? 'var(--orange)' : '#c9d1df';
+  });
+  if (step.otrosIdx !== undefined){
+    const wrap = document.getElementById('otrosInputWrap');
+    if (wrap) wrap.style.display = sel.has(step.otrosIdx) ? 'block' : 'none';
+  }
+  const nb = document.getElementById('perelliNextBtn');
+  if (nb) nb.disabled = sel.size === 0;
+}
+function perelliAdvanceMulti(){
+  const step = PERELLI_STEPS[perelliState.stepIdx];
+  const selected = [...perelliState.currentMultiSelected].map(i => {
+    if (step.otrosIdx !== undefined && i === step.otrosIdx){
+      const txt = (document.getElementById('otrosTxt')?.value || '').trim();
+      return txt ? `Otros: ${txt}` : 'Otros';
+    }
+    return step.options[i];
+  });
+  perelliAdvance(selected.join(', '));
+}
+function renderPerelliGrid(step){
+  const GRID_COLORS = ['#1aa672','#5fb84a','#e8c400','#f0930f','#e0322f'];
+  const GRID_HDRS   = ['No la<br>afecta','Leve','Moderado','Alto','Severo'];
+  const headRow = `<div class="rtable-head"><div class="rtable-lbl"></div>${GRID_HDRS.map((h,i)=>`<div class="rtable-hcell" style="color:${GRID_COLORS[i]}">${h}</div>`).join('')}</div>`;
+  const rows = step.items.map((item, ri) =>
+    `<div class="rtable-row"><div class="rtable-lbl">${item}</div>${GRID_COLORS.map((color,v)=>
+      `<button type="button" class="rtable-cell" id="pgb_${ri}_${v+1}" style="--cell-color:${color}" onclick="perelliRate(${ri},${v+1})"></button>`
+    ).join('')}</div>`
+  ).join('');
+  document.getElementById('testOptions').innerHTML =
+    `<div class="rtable">${headRow}${rows}</div><button type="button" class="test-next-btn" id="perelliNextBtn" disabled onclick="perelliAdvanceGrid()">Siguiente →</button>`;
+}
+function perelliRate(itemIdx, val){
+  perelliState.currentGridRatings[itemIdx] = val;
+  const step = PERELLI_STEPS[perelliState.stepIdx];
+  for (let v = 1; v <= step.scale; v++){
+    const btn = document.getElementById(`pgb_${itemIdx}_${v}`);
+    if (btn) btn.classList.toggle('on', v === val);
+  }
+  const nb = document.getElementById('perelliNextBtn');
+  if (nb) nb.disabled = !step.items.every((_, i) => perelliState.currentGridRatings[i] !== undefined);
+}
+function perelliAdvanceGrid(){
+  const GRID_LABELS = ['No la afecta','Leve','Moderado','Alto','Severo'];
+  const step = PERELLI_STEPS[perelliState.stepIdx];
+  const summary = step.items.map((item, i) => {
+    const v = perelliState.currentGridRatings[i];
+    return `${item}: ${v} = ${GRID_LABELS[v-1]}`;
+  }).join(', ');
+  perelliAdvance(summary);
+}
+function renderPerelliTextInput(step){
+  document.getElementById('testOptions').innerHTML =
+    `<textarea id="perelliTxt" class="otros-input" maxlength="${step.maxlength}" placeholder="${step.placeholder}" style="height:90px;width:100%;box-sizing:border-box"></textarea>
+     <button type="button" class="test-next-btn" onclick="perelliAdvanceText()" style="margin-top:8px">Siguiente →</button>`;
+}
+function perelliAdvanceText(){
+  const val = (document.getElementById('perelliTxt')?.value || '').trim();
+  perelliAdvance(val);
+}
+function renderPerelliFinal(){
+  updateBackBtn(true);
+  document.getElementById('testCount').textContent = `Completaste las ${PERELLI_STEPS.length} preguntas`;
+  document.getElementById('testProgressBar').style.width = '100%';
+  document.getElementById('testQuestion').textContent = 'Listo. Tocá el botón para enviarle tus resultados a EVA por WhatsApp.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarPerelli()">${waSVG}Enviar</button>`;
+}
+function finalizarPerelli(){
+  const [fase, nivelFatiga, sintomas, funciones, calidadSuenio, factores, capacidad, comentarios] = perelliState.answers;
+  if (SHEETS_PERELLI_URL) {
+    const p = getProfile() || {};
+    fetch(SHEETS_PERELLI_URL + '?' + new URLSearchParams({
+      nombre: p.nombre||'', id_piloto: p.id_piloto||'', empresa: p.empresa||'', dpto: p.departamento||'',
+      sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
+      fase, nivel_fatiga: nivelFatiga, sintomas, funciones,
+      calidad_suenio: calidadSuenio, factores, capacidad, comentarios: comentarios||''
+    }), { mode:'no-cors' }).catch(() => {});
+  }
+  const details = `*Momento del día:* ${fase}\n\n*Nivel de fatiga (1–7):* ${nivelFatiga}\n\n*Síntomas actuales:* ${sintomas}\n\n*Impacto en funciones (1–5):* ${funciones}\n\n*Calidad del sueño (24 h):* ${calidadSuenio}\n\n*Factores contribuyentes:* ${factores}\n\n*Capacidad para actividades habituales (1–5):* ${capacidad}${comentarios ? '\n\n*Comentarios:* ' + comentarios : ''}`;
+  const msg = `Completé el *Test de Fatiga (Perelli SP)* desde el portal web.\n\n${details}`;
+  const _catPer = ITEM_CATEGORY[perelliState.item.id] || 'agotamiento';
+  const _pPer = getProfile() || {};
+  const _perId = perelliState.item.id;
+  const itemFinal = { ...perelliState.item, msg: msg + (FLYER_WA[_catPer]||'') };
+  perelliState = null;
+  document.getElementById('testOverlay').classList.remove('show');
+  mostrarCalma(waUrl(itemFinal), _perId, _catPer, _pPer.nombre || '');
+}
+
+// ── Somnolencia · Escala KSS ─────────────────────────────────────────────────
+const KSS_STEPS = [
+  {
+    type:'single', question:'¿En qué momento del día te encontrás?',
+    options:['Inicio del día (mañana)','A mitad del día','Tarde','Noche','En descanso o guardia']
+  },
+  {
+    type:'single', question:'¿Cómo describirías tu nivel de alerta en este momento?',
+    options:[
+      '1 = Extremadamente alerta',
+      '2 = Muy alerta',
+      '3 = Alerta',
+      '4 = Bastante alerta',
+      '5 = Ni alerta ni somnoliento',
+      '6 = Algunos signos de somnolencia',
+      '7 = Somnoliento, sin esfuerzo para permanecer despierto',
+      '8 = Somnoliento, con esfuerzo para permanecer despierto',
+      '9 = Muy somnoliento, gran esfuerzo, luchando contra el sueño'
+    ],
+    colors:['#1aa672','#4cbb5e','#8cc830','#c0d416','#e8c400','#f0930f','#f2640f','#d92b2b','#b30000']
+  },
+  {
+    type:'single', question:'¿Cuántas horas dormiste en las últimas 24 h?',
+    options:['Menos de 4 horas','Entre 4 y 6 horas','Entre 6 y 8 horas','Más de 8 horas'],
+    colors:['#e0322f','#f0930f','#5fb84a','#1aa672']
+  },
+  {
+    type:'single', question:'¿Cuál es tu situación actual?',
+    options:['Inicio de mi jornada','En plena jornada','Finalizando la jornada','En descanso o guardia','En casa']
+  },
+  {
+    type:'optional-text', question:'¿Quieres agregar algún comentario adicional? (opcional)',
+    placeholder:'Escribe aquí tu comentario...', maxlength:200
+  }
+];
+
+const ESTRES_SINTOMAS = [
+  'Imposibilidad de conciliar el sueño',
+  'Jaquecas y dolor de cabeza',
+  'Indigestiones o molestias gastrointestinales',
+  'Sensación de cansancio extremo o agotamiento',
+  'Comer, beber o fumar más de lo habitual',
+  'Disminución del interés sexual',
+  'Respiración entrecortada o sensación de ahogo',
+  'Disminución del apetito',
+  'Temblores musculares o tics nerviosos',
+  'Pinchazos o dolores en distintas partes del cuerpo',
+  'No querer levantarse por la mañana',
+  'Sudoración o palpitaciones'
+];
+const _EO = ['0 = Nunca','1 = Raramente','2 = Una vez al mes o menos','3 = Unas pocas veces al mes','4 = Una vez a la semana','5 = Unas pocas veces a la semana','6 = Todos los días'];
+const _EC = ['#1aa672','#5fb84a','#a3c925','#e8c400','#f0930f','#f2640f','#e0322f'];
+const ESTRES_STEPS = ESTRES_SINTOMAS.map(s => ({ type:'single', question:s, options:_EO, colors:_EC }));
+
+const ANSIEDAD_SINTOMAS = [
+  'Adormecimiento o cosquilleo','Sentirse acalorado','Debilidad en las piernas',
+  'Incapacidad para relajarse','Miedo de que suceda lo peor','Mareo','Taquicardia',
+  'Inquietud','Sentirse aterrorizado','Nerviosismo','Sensación de ahogo',
+  'Manos temblorosas','Escalofríos','Miedo a perder el control',
+  'Dificultad para respirar','Miedo a morir','Sentirse asustado',
+  'Indigestión o molestias estomacales','Pérdida de la conciencia o desmayo',
+  'Rostro sonrojado','Sudoración (no debido al calor)'
+];
+const _AO = ['0 = No ha estado presente','1 = Levemente, no me ha molestado','2 = Moderadamente, pero lo pude superar','3 = Severamente, difícil lo soporté'];
+const _AC = ['#1aa672','#e8c400','#f0930f','#e0322f'];
+const ANSIEDAD_STEPS = ANSIEDAD_SINTOMAS.map(s => ({ type:'single', question:s, options:_AO, colors:_AC }));
+
+const GASTRO_SINTOMAS = [
+  'Distensión abdominal o reflujo tres o más veces por semana',
+  'Hormigueos, adormecimientos o calambres en las extremidades al menos una vez por semana',
+  'Hinchazón de cara o extremidades dos o más veces por semana',
+  'Dolor de cabeza al menos una vez por semana',
+  'Molestias articulares o musculares dos a más veces por semana (incluídas cervicalgia y lumbalgia)',
+  'Falta de energía o cansancio inexplicable tres o más veces por semana',
+  'Erupciones en la piel o picazón en el cuerpo al menos una vez por semana',
+  'Visión borrosa o neblina mental al menos una vez cada 15 días',
+  'Inestabilidad anímica, ansiedad o tristeza 3 o más veces por semana sin motivo aparente',
+  'Rinitis (congestión nasal) crónica o sinusitis crónica',
+  'Dolor en ganglios/aftas/piernas inquietas/fascitis plantar/candidiasis/asma/síndrome premenstrual',
+  'Antecedentes de cirugía de vesícula y/o hipotiroidismo de Hashimoto'
+];
+const _GO = ['0 = Muy en desacuerdo','1 = En desacuerdo','2 = De acuerdo'];
+const _GC = ['#1aa672','#e8c400','#e0322f'];
+const GASTRO_STEPS = GASTRO_SINTOMAS.map(s => ({ type:'single', question:s, options:_GO, colors:_GC }));
+
+function renderKssStep(){
+  const { stepIdx } = kssState;
+  const step = KSS_STEPS[stepIdx];
+  const total = KSS_STEPS.length;
+  updateBackBtn(stepIdx > 0);
+  document.getElementById('testCount').textContent = `Pregunta ${stepIdx + 1} de ${total}`;
+  document.getElementById('testProgressBar').style.width = (stepIdx / total * 100) + '%';
+  document.getElementById('testQuestion').textContent = step.question;
+  if (step.type === 'single') renderKssSingle(step);
+  else if (step.type === 'optional-text') renderKssComment(step);
+}
+function kssAdvance(answer){
+  kssState.answers.push(answer);
+  kssState.stepIdx++;
+  if (kssState.stepIdx >= KSS_STEPS.length) renderKssFinal();
+  else renderKssStep();
+}
+function renderKssSingle(step){
+  document.getElementById('testOptions').innerHTML = step.options.map((opt, i) => {
+    const bg  = step.colors ? step.colors[i] : '#c9d1df';
+    const lbl = opt.replace(/^\d+ = /, '');
+    return `<button type="button" class="test-opt" onclick="kssPickSingle(${i})"><span class="dot" style="background:${bg}"></span><span class="lbl">${lbl}</span></button>`;
+  }).join('');
+}
+function kssPickSingle(i){
+  kssAdvance(KSS_STEPS[kssState.stepIdx].options[i]);
+}
+function renderKssComment(step){
+  document.getElementById('testOptions').innerHTML =
+    `<textarea class="kss-comment" id="kssComment" rows="4" maxlength="${step.maxlength}" placeholder="${step.placeholder}"></textarea>
+     <button type="button" class="test-next-btn" onclick="kssAdvanceComment()">Continuar →</button>`;
+}
+function kssAdvanceComment(){
+  kssAdvance((document.getElementById('kssComment')?.value || '').trim());
+}
+function renderKssFinal(){
+  updateBackBtn(true);
+  document.getElementById('testCount').textContent = `Completaste las ${KSS_STEPS.length} preguntas`;
+  document.getElementById('testProgressBar').style.width = '100%';
+  document.getElementById('testQuestion').textContent = 'Listo. Tocá el botón para enviarle tus resultados a EVA por WhatsApp.';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarKss()">${waSVG}Enviar</button>`;
+}
+function finalizarKss(){
+  const [fase, nivelAlerta, horasSuenio, tipoOp, comentario] = kssState.answers;
+
+  // Enviar a Google Sheets (GET con parámetros)
+  if (SHEETS_KSS_URL) {
+    const p = getProfile() || {};
+    const kssNum = parseInt(nivelAlerta);
+    const kssLabel = nivelAlerta.replace(/^\d+ = /, '');
+    const params = new URLSearchParams({
+      nombre:     p.nombre       || '',
+      id_piloto:  p.id_piloto    || '',
+      empresa:    p.empresa      || '',
+      dpto:       p.departamento || '',
+      sexo:       p.sexo         || '',
+      edad:       p.edad         || '',
+      telefono:   p.telefono     || '',
+      fase:       fase,
+      kss:        kssNum + ' = ' + kssLabel,
+      suenio:     horasSuenio,
+      tipoOp:     tipoOp,
+      comentario: comentario || ''
+    });
+    fetch(SHEETS_KSS_URL + '?' + params, { mode: 'no-cors' }).catch(() => {});
+  }
+
+  // Mensaje WhatsApp (texto completo, sin cambios)
+  let details = `*Momento del día:* ${fase}\n\n*Nivel de alerta (KSS 1–9):* ${nivelAlerta}\n\n*Horas de sueño (24 h):* ${horasSuenio}\n\n*Situación actual:* ${tipoOp}`;
+  if (comentario) details += `\n\n*Comentario:* ${comentario}`;
+  const msg = `Completé el *Test de Somnolencia (Escala KSS)* desde el portal web.\n\n${details}`;
+  const _catKss = ITEM_CATEGORY[kssState.item.id] || 'agotamiento';
+  const _pKss = getProfile() || {};
+  const _kssId = kssState.item.id;
+  const itemFinal = { ...kssState.item, msg: msg + (FLYER_WA[_catKss]||'') };
+  kssState = null;
+  document.getElementById('testOverlay').classList.remove('show');
+  mostrarCalma(waUrl(itemFinal), _kssId, _catKss, _pKss.nombre || '');
+}
+
+// ── Test de Estrés ──────────────────────────────────────────────
+function renderEstresStep(){
+  const { stepIdx } = estresState;
+  const step = ESTRES_STEPS[stepIdx];
+  const total = ESTRES_STEPS.length;
+  updateBackBtn(stepIdx > 0);
+  document.getElementById('testCount').textContent = `Síntoma ${stepIdx + 1} de ${total}`;
+  document.getElementById('testProgressBar').style.width = (stepIdx / total * 100) + '%';
+  document.getElementById('testQuestion').textContent = step.question;
+  document.getElementById('testOptions').innerHTML = step.options.map((opt, i) => {
+    const lbl = opt.replace(/^\d+ = /, '');
+    return `<button type="button" class="test-opt" onclick="estresPickSingle(${i})"><span class="dot" style="background:${step.colors[i]}"></span><span class="lbl">${lbl}</span></button>`;
+  }).join('');
+}
+function estresPickSingle(i){ estresAdvance(ESTRES_STEPS[estresState.stepIdx].options[i]); }
+function estresAdvance(answer){
+  estresState.answers.push(answer);
+  estresState.stepIdx++;
+  if (estresState.stepIdx >= ESTRES_STEPS.length) renderEstresFinal();
+  else renderEstresStep();
+}
+function renderEstresFinal(){
+  updateBackBtn(true);
+  document.getElementById('testCount').textContent = `Completaste los ${ESTRES_STEPS.length} síntomas`;
+  document.getElementById('testProgressBar').style.width = '100%';
+  document.getElementById('testQuestion').textContent = '¿Confirmás el envío del Test de Estrés?';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarEstres()">${waSVG}Enviar</button>`;
+}
+function finalizarEstres(){
+  const FREQ_LABELS = ['Nunca','Raramente','Una vez al mes o menos','Unas pocas veces al mes','Una vez a la semana','Unas pocas veces a la semana','Todos los días'];
+  const ratings = estresState.answers.map(a => { const n = parseInt(a); return `${n} = ${FREQ_LABELS[n]}`; });
+  if (SHEETS_ESTRES_URL) {
+    const p = getProfile() || {};
+    const params = new URLSearchParams({
+      nombre: p.nombre||'', empresa: p.empresa||'', dpto: p.departamento||'',
+      sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
+      s0:ratings[0],  s1:ratings[1],  s2:ratings[2],  s3:ratings[3],
+      s4:ratings[4],  s5:ratings[5],  s6:ratings[6],  s7:ratings[7],
+      s8:ratings[8],  s9:ratings[9],  s10:ratings[10], s11:ratings[11]
+    });
+    fetch(SHEETS_ESTRES_URL + '?' + params, { mode:'no-cors' }).catch(() => {});
+  }
+  const details = ESTRES_SINTOMAS.map((s, i) => `*${s}:* ${ratings[i]}`).join('\n\n');
+  const msg = `Completé el *Test de Estrés* desde el portal web.\n\n${details}`;
+  const _catEst = ITEM_CATEGORY[estresState.item.id] || 'panico';
+  const _pEst = getProfile() || {};
+  const _estId = estresState.item.id;
+  const itemFinal = { ...estresState.item, msg: msg + (FLYER_WA[_catEst]||'') };
+  estresState = null;
+  document.getElementById('testOverlay').classList.remove('show');
+  mostrarCalma(waUrl(itemFinal), _estId, _catEst, _pEst.nombre || '');
+}
+
+// ── Test de Ansiedad (BAI) ──────────────────────────────────────
+function renderAnsiedadStep(){
+  const { stepIdx } = ansiedadState;
+  const step = ANSIEDAD_STEPS[stepIdx];
+  const total = ANSIEDAD_STEPS.length;
+  updateBackBtn(stepIdx > 0);
+  document.getElementById('testCount').textContent = `Síntoma ${stepIdx + 1} de ${total}`;
+  document.getElementById('testProgressBar').style.width = (stepIdx / total * 100) + '%';
+  document.getElementById('testQuestion').textContent = step.question;
+  document.getElementById('testOptions').innerHTML = step.options.map((opt, i) =>
+    `<button type="button" class="test-opt" onclick="ansiedadPickSingle(${i})"><span class="dot" style="background:${step.colors[i]}"></span><span class="lbl">${opt.replace(/^\d+ = /,'')}</span></button>`
+  ).join('');
+}
+function ansiedadPickSingle(i){ ansiedadAdvance(ANSIEDAD_STEPS[ansiedadState.stepIdx].options[i]); }
+function ansiedadAdvance(answer){
+  ansiedadState.answers.push(answer);
+  ansiedadState.stepIdx++;
+  if (ansiedadState.stepIdx >= ANSIEDAD_STEPS.length) renderAnsiedadFinal();
+  else renderAnsiedadStep();
+}
+function renderAnsiedadFinal(){
+  updateBackBtn(true);
+  document.getElementById('testCount').textContent = `Completaste los ${ANSIEDAD_STEPS.length} síntomas`;
+  document.getElementById('testProgressBar').style.width = '100%';
+  document.getElementById('testQuestion').textContent = '¿Confirmás el envío del Test de Ansiedad?';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarAnsiedad()">${waSVG}Enviar</button>`;
+}
+function finalizarAnsiedad(){
+  const ANSIEDAD_LABELS = ['No ha estado presente','Levemente, no me ha molestado','Moderadamente, pero lo pude superar','Severamente, difícil lo soporté'];
+  const ratings = ansiedadState.answers.map(a => { const n = parseInt(a); return `${n} = ${ANSIEDAD_LABELS[n]}`; });
+  if (SHEETS_ANSIEDAD_URL) {
+    const p = getProfile() || {};
+    const obj = { nombre:p.nombre||'', cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      sexo:p.sexo||'', edad:p.edad||'', cargo:p.cargo||'', telefono:p.telefono||'' };
+    ratings.forEach((r,i) => { obj['s'+i] = r; });
+    fetch(SHEETS_ANSIEDAD_URL + '?' + new URLSearchParams(obj), { mode:'no-cors' }).catch(() => {});
+  }
+  const details = ANSIEDAD_SINTOMAS.map((s,i) => `*${s}:* ${ratings[i]}`).join('\n\n');
+  const msg = `Completé el *Test de Ansiedad (BAI)* desde el portal web.\n\n${details}`;
+  const _catAns = ITEM_CATEGORY[ansiedadState.item.id] || 'panico';
+  const _pAns = getProfile() || {};
+  const _ansId = ansiedadState.item.id;
+  const itemFinal = { ...ansiedadState.item, msg: msg + (FLYER_WA[_catAns]||'') };
+  ansiedadState = null;
+  document.getElementById('testOverlay').classList.remove('show');
+  mostrarCalma(waUrl(itemFinal), _ansId, _catAns, _pAns.nombre || '');
+}
+
+// ── Test Gastrointestinal ────────────────────────────────────────
+function renderGastroStep(){
+  const { stepIdx } = gastroState;
+  const step = GASTRO_STEPS[stepIdx];
+  const total = GASTRO_STEPS.length;
+  updateBackBtn(stepIdx > 0);
+  document.getElementById('testCount').textContent = `Síntoma ${stepIdx + 1} de ${total}`;
+  document.getElementById('testProgressBar').style.width = (stepIdx / total * 100) + '%';
+  document.getElementById('testQuestion').textContent = step.question;
+  document.getElementById('testOptions').innerHTML = step.options.map((opt, i) =>
+    `<button type="button" class="test-opt" onclick="gastroPickSingle(${i})"><span class="dot" style="background:${step.colors[i]}"></span><span class="lbl">${opt.replace(/^\d+ = /,'')}</span></button>`
+  ).join('');
+}
+function gastroPickSingle(i){ gastroAdvance(GASTRO_STEPS[gastroState.stepIdx].options[i]); }
+function gastroAdvance(answer){
+  gastroState.answers.push(answer);
+  gastroState.stepIdx++;
+  if (gastroState.stepIdx >= GASTRO_STEPS.length) renderGastroFinal();
+  else renderGastroStep();
+}
+function renderGastroFinal(){
+  updateBackBtn(true);
+  document.getElementById('testCount').textContent = `Completaste los ${GASTRO_STEPS.length} síntomas`;
+  document.getElementById('testProgressBar').style.width = '100%';
+  document.getElementById('testQuestion').textContent = '¿Confirmás el envío del Test Gastrointestinal?';
+  document.getElementById('testOptions').innerHTML = `<button type="button" class="save-btn wa-send-btn" onclick="finalizarGastro()">${waSVG}Enviar</button>`;
+}
+function finalizarGastro(){
+  const GASTRO_LABELS = ['Muy en desacuerdo','En desacuerdo','De acuerdo'];
+  const ratings = gastroState.answers.map(a => { const n = parseInt(a); return `${n} = ${GASTRO_LABELS[n]}`; });
+  if (SHEETS_GASTRO_URL) {
+    const p = getProfile() || {};
+    const params = new URLSearchParams({
+      nombre:p.nombre||'', cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      sexo:p.sexo||'', edad:p.edad||'', cargo:p.cargo||'', telefono:p.telefono||''
+    });
+    ratings.forEach((r,i) => params.set('s'+i, r));
+    fetch(SHEETS_GASTRO_URL + '?' + params, { mode:'no-cors' }).catch(() => {});
+  }
+  const details = GASTRO_SINTOMAS.map((s,i) => `*${s}:* ${ratings[i]}`).join('\n\n');
+  const msg = `Completé el *Test Gastrointestinal* desde el portal web.\n\n${details}`;
+  const _catGas = ITEM_CATEGORY[gastroState.item.id] || 'gastro';
+  const _pGas = getProfile() || {};
+  const _gasId = gastroState.item.id;
+  const itemFinal = { ...gastroState.item, msg: msg + (FLYER_WA[_catGas]||'') };
+  gastroState = null;
+  document.getElementById('testOverlay').classList.remove('show');
+  mostrarCalma(waUrl(itemFinal), _gasId, _catGas, _pGas.nombre || '');
+}
+
+function refreshStates(){
+  const r = getReports();
+  document.querySelectorAll('.item').forEach(el => {
+    const id = el.dataset.id;
+    const rep = r[id];
+    if (rep){
+      el.classList.add('done');
+      const t = el.querySelector('[data-time]');
+      if (t) t.textContent = rep.time;
+    } else {
+      el.classList.remove('done');
+    }
+  });
+}
+
+/* ════════════════ PERFIL / SETUP ════════════════ */
+function paintProfile(){
+  const p = getProfile();
+  if (!p) return;
+  document.getElementById('pcName').textContent = p.nombre;
+  document.getElementById('pcEmp').textContent  = [p.empresa, p.cargo].filter(Boolean).join(' · ');
+  const initials = p.nombre.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  document.getElementById('pcAvatar').textContent = initials || '–';
+  const primerNombre = p.nombre.trim().split(/\s+/)[0];
+  document.getElementById('portalName').textContent = primerNombre ? 'Hola, ' + primerNombre : 'Hola';
+}
+
+let editing = false;
+function openSetup(isEdit){
+  editing = !!isEdit;
+  const p = getProfile() || {nombre:'',empresa:'',cedula:'',departamento:'',cargo:'',sexo:'',edad:'',telefono:''};
+  document.getElementById('inName').value     = p.nombre;
+  document.getElementById('inCed').value      = p.cedula      || '';
+  document.getElementById('inEmp').value      = p.empresa;
+  document.getElementById('inDep').value      = p.departamento|| '';
+  document.getElementById('inCargo').value    = p.cargo       || '';
+  document.getElementById('inSexo').value     = p.sexo        || '';
+  document.getElementById('inEdad').value     = p.edad        || '';
+  document.getElementById('inTelefono').value = p.telefono    || '';
+  document.getElementById('setupTitle').textContent = isEdit ? 'Editar mis datos' : 'Bienvenido 👋';
+  document.getElementById('setupLead').textContent = isEdit
+    ? 'Actualizá tus datos. Se aplicarán a tus próximos reportes.'
+    : 'Antes de empezar, completá tus datos. Quedan guardados en este dispositivo y se usan para identificarte ante EVA en cada reporte.';
+  document.getElementById('cancelBtn').style.display = isEdit ? 'block' : 'none';
+  ['fName','fCed','fEmp','fDep','fCargo','fSexo','fEdad','fTelefono'].forEach(id => document.getElementById(id).classList.remove('invalid'));
+  document.getElementById('setup').classList.add('show');
+}
+function closeSetup(){ document.getElementById('setup').classList.remove('show'); }
+
+function saveProfile(){
+  const nombre       = document.getElementById('inName').value.trim().replace(/\s+/g,' ');
+  const cedula       = document.getElementById('inCed').value.trim().replace(/\s+/g,' ');
+  const empresa      = document.getElementById('inEmp').value.trim().replace(/\s+/g,' ');
+  const departamento = document.getElementById('inDep').value.trim().replace(/\s+/g,' ');
+  const cargo        = document.getElementById('inCargo').value.trim().replace(/\s+/g,' ');
+  const sexo         = document.getElementById('inSexo').value;
+  const edad         = document.getElementById('inEdad').value.trim();
+  const telefono     = document.getElementById('inTelefono').value.trim();
+  let ok = true;
+  document.getElementById('fName').classList.toggle('invalid', !nombre); if(!nombre) ok=false;
+  document.getElementById('fCed').classList.toggle('invalid', !cedula); if(!cedula) ok=false;
+  document.getElementById('fEmp').classList.toggle('invalid', !empresa); if(!empresa) ok=false;
+  document.getElementById('fDep').classList.toggle('invalid', !departamento); if(!departamento) ok=false;
+  document.getElementById('fCargo').classList.toggle('invalid', !cargo); if(!cargo) ok=false;
+  document.getElementById('fSexo').classList.toggle('invalid', !sexo); if(!sexo) ok=false;
+  document.getElementById('fEdad').classList.toggle('invalid', !edad); if(!edad) ok=false;
+  document.getElementById('fTelefono').classList.toggle('invalid', !telefono); if(!telefono) ok=false;
+  if (!ok) return;
+  setProfile({ nombre, cedula, empresa, departamento, cargo, sexo, edad, telefono });
+  paintProfile();
+  renderSections();           // re-genera hrefs con datos nuevos
+  closeSetup();
+  showToast(editing ? 'Datos actualizados' : '¡Listo! Ya podés reportar');
+}
+
+/* ════════════════ TOAST ════════════════ */
+let toastT;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.remove('show'); void t.offsetWidth;   // reinicia la animación
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(hideToast, 2600);
+}
+function hideToast(){ clearTimeout(toastT); const t = document.getElementById('toast'); if (t) t.classList.remove('show'); }
+function hide(id){ document.getElementById(id).classList.remove('show'); }
+
+/* ════════════════ INSTALL (PWA) ════════════════ */
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+const isAndroid = /Android/.test(navigator.userAgent);
+const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+const isMobile = isIOS || isAndroid || window.innerWidth <= 820;
+
+// Botón visible en celular siempre que la app no esté ya instalada
+if (!isStandalone && isMobile) installBtn.style.display = 'flex';
+
+// Android/Chrome: guardamos el instalador nativo cuando el navegador lo ofrece
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); deferredPrompt = e;
+  if (!isStandalone) installBtn.style.display = 'flex';
+});
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt){                                       // Android: instalación nativa (con el logo)
+    deferredPrompt.prompt();
+    const res = await deferredPrompt.userChoice;
+    if (res.outcome === 'accepted') installBtn.style.display = 'none';
+    deferredPrompt = null;
+    return;
+  }
+  if (isIOS){ document.getElementById('iosModal').classList.add('show'); return; }   // iPhone: guía Safari
+  document.getElementById('androidModal').classList.add('show');                     // Android sin instalador nativo: guía
+});
+window.addEventListener('appinstalled', () => { installBtn.style.display = 'none'; deferredPrompt = null; });
+['iosModal','androidModal'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', (e)=>{ if(e.target.id===id) hide(id); });
+});
+
+/* ════════════════ INIT ════════════════ */
+document.getElementById('verTag').textContent = 'Versión ' + APP_VERSION;
+document.getElementById('app').style.display = 'block';
+
+const _prof = getProfile();
+renderSections();
+if (_prof) paintProfile();
+
+// Perfil completo = tiene todos los campos obligatorios (incluye cédula)
+const _complete = _prof && _prof.nombre && _prof.cedula && _prof.empresa && _prof.departamento && _prof.cargo;
+
+// Forzar consentimiento + carga de datos a quien no esté completo (incluye usuarios viejos)
+if (!_complete){
+  if (!hasConsent()) document.getElementById('consent').classList.add('show');
+  else openSetup(false);
+}
+
+// Si la app estuvo abierta y cambió el día, resetea al volver al foco (y cierra el aviso)
+document.addEventListener('visibilitychange', () => { if (!document.hidden){ refreshStates(); hideToast(); } });
+document.getElementById('toast').addEventListener('click', hideToast);   // tocar el aviso para cerrarlo
+
+/* ════════════════ SERVICE WORKER (auto-update sin cache vieja) ════════════════ */
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.update();
+      setInterval(() => reg.update(), 60 * 60 * 1000);  // chequea cada hora
+    }).catch(()=>{});
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return; refreshing = true; window.location.reload();
+    });
+  });
+}
+</script>
+</body>
+</html>
