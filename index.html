@@ -655,6 +655,14 @@ function refreshRegisterBanner(){
 function getProfile(){ try { return JSON.parse(localStorage.getItem(K_PROFILE)) || null; } catch(e){ return null; } }
 function setProfile(p){ try { localStorage.setItem(K_PROFILE, JSON.stringify(p)); } catch(e){ showToast('No se pudo guardar: activa el almacenamiento del navegador.'); throw e; } }
 
+// El número de teléfono se pega al nombre en el mismo campo, así llega a la
+// columna "nombre" que el script de Sheets ya captura, sin tocar el script.
+function nombreConTelefono(p){
+  const nombre = (p.nombre || '').trim();
+  const tel = (p.telefono || '').trim();
+  return tel ? `${nombre} · ${tel}` : nombre;
+}
+
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
 function getReports(){
@@ -670,7 +678,7 @@ function enviarOperacional(campo){
   if (!SHEETS_OPERACIONAL_URL || !campo) return;
   const p = getProfile() || {};
   fetch(SHEETS_OPERACIONAL_URL + '?' + new URLSearchParams({
-    nombre: p.nombre||'', empresa: p.empresa||'', dpto: p.departamento||'',
+    nombre: nombreConTelefono(p), empresa: p.empresa||'', dpto: p.departamento||'',
     sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'', campo
   }), { mode:'no-cors' }).catch(() => {});
 }
@@ -1097,7 +1105,7 @@ function finalizarTest(){
   if (SHEETS_DEPRESION_URL) {
     const p = getProfile() || {};
     const params = new URLSearchParams({
-      nombre:p.nombre||'', id_piloto:p.id_piloto||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      nombre:nombreConTelefono(p), id_piloto:p.id_piloto||'', empresa:p.empresa||'', dpto:p.departamento||'',
       sexo:p.sexo||'', edad:p.edad||'', telefono:p.telefono||''
     });
     testRespuestas.forEach((r, i) => params.set('s'+i, r + ' = ' + TEST_ESCALA[r]));
@@ -1277,7 +1285,7 @@ function finalizarPerelli(){
   if (SHEETS_PERELLI_URL) {
     const p = getProfile() || {};
     fetch(SHEETS_PERELLI_URL + '?' + new URLSearchParams({
-      nombre: p.nombre||'', id_piloto: p.id_piloto||'', empresa: p.empresa||'', dpto: p.departamento||'',
+      nombre: nombreConTelefono(p), id_piloto: p.id_piloto||'', empresa: p.empresa||'', dpto: p.departamento||'',
       sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
       fase, nivel_fatiga: nivelFatiga, sintomas, funciones,
       calidad_suenio: calidadSuenio, factores, capacidad, comentarios: comentarios||''
@@ -1444,7 +1452,7 @@ function finalizarKss(){
     const kssNum = parseInt(nivelAlerta);
     const kssLabel = nivelAlerta.replace(/^\d+ = /, '');
     const params = new URLSearchParams({
-      nombre:     p.nombre       || '',
+      nombre:     nombreConTelefono(p),
       id_piloto:  p.id_piloto    || '',
       empresa:    p.empresa      || '',
       dpto:       p.departamento || '',
@@ -1507,7 +1515,7 @@ function finalizarEstres(){
   if (SHEETS_ESTRES_URL) {
     const p = getProfile() || {};
     const params = new URLSearchParams({
-      nombre: p.nombre||'', empresa: p.empresa||'', dpto: p.departamento||'',
+      nombre: nombreConTelefono(p), empresa: p.empresa||'', dpto: p.departamento||'',
       sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
       s0:ratings[0],  s1:ratings[1],  s2:ratings[2],  s3:ratings[3],
       s4:ratings[4],  s5:ratings[5],  s6:ratings[6],  s7:ratings[7],
@@ -1558,7 +1566,7 @@ function finalizarAnsiedad(){
   const ratings = ansiedadState.answers.map(a => { const n = parseInt(a); return `${n} = ${ANSIEDAD_LABELS[n]}`; });
   if (SHEETS_ANSIEDAD_URL) {
     const p = getProfile() || {};
-    const obj = { nombre:p.nombre||'', cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
+    const obj = { nombre:nombreConTelefono(p), cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
       sexo:p.sexo||'', edad:p.edad||'', cargo:p.cargo||'', telefono:p.telefono||'' };
     ratings.forEach((r,i) => { obj['s'+i] = r; });
     fetch(SHEETS_ANSIEDAD_URL + '?' + new URLSearchParams(obj), { mode:'no-cors' }).catch(() => {});
@@ -1607,7 +1615,7 @@ function finalizarGastro(){
   if (SHEETS_GASTRO_URL) {
     const p = getProfile() || {};
     const params = new URLSearchParams({
-      nombre:p.nombre||'', cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      nombre:nombreConTelefono(p), cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
       sexo:p.sexo||'', edad:p.edad||'', cargo:p.cargo||'', telefono:p.telefono||''
     });
     ratings.forEach((r,i) => params.set('s'+i, r));
@@ -1658,7 +1666,7 @@ function finalizarCansancio(){
   if (SHEETS_CANSANCIO_URL) {
     const p = getProfile() || {};
     const params = new URLSearchParams({
-      nombre:p.nombre||'', cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      nombre:nombreConTelefono(p), cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
       sexo:p.sexo||'', edad:p.edad||'', cargo:p.cargo||'', telefono:p.telefono||''
     });
     ratings.forEach((r, i) => params.set('s'+i, r));
