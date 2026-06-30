@@ -148,17 +148,24 @@
   .item.done .tile { border-color: var(--green); background: #e7f7ef; }
 
   /* ── Banner de registro (debajo de Recursos de Emergencia) ── */
-  .register-banner { display: flex; flex-direction: column; gap: 0.7rem; background: rgba(244,122,31,0.14);
-    border: 1.5px solid rgba(244,122,31,0.4); border-radius: var(--radius); padding: 0.9rem 1rem;
-    margin-bottom: 1.6rem; animation: fadeUp .4s ease .08s both; }
-  .register-banner .rb-text { display: flex; flex-direction: column; gap: 0.2rem; }
-  .register-banner strong { font-size: 0.92rem; font-weight: 800; color: #fff; }
-  .register-banner span { font-size: 0.78rem; color: rgba(255,255,255,0.78); line-height: 1.4; }
-  .rb-btn { padding: 0.7rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--orange), var(--orange-2));
-    color: #fff; font-weight: 700; font-size: 0.86rem; font-family: inherit; cursor: pointer;
-    box-shadow: 0 4px 14px rgba(244,122,31,0.32); transition: transform .12s; }
-  .rb-btn:active { transform: scale(0.98); }
+  .register-banner { display: flex; flex-direction: column; gap: 0.85rem; background: rgba(244,122,31,0.16);
+    border: 2px solid rgba(244,122,31,0.55); border-radius: var(--radius); padding: 1.1rem 1.1rem;
+    margin-bottom: 1.6rem; animation: fadeUp .4s ease .08s both; box-shadow: 0 6px 22px rgba(244,122,31,0.18); }
+  .register-banner .rb-text { display: flex; flex-direction: column; gap: 0.25rem; }
+  .register-banner strong { font-size: 1.02rem; font-weight: 800; color: #fff; }
+  .register-banner span { font-size: 0.8rem; color: rgba(255,255,255,0.8); line-height: 1.45; }
+  .rb-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; border: none;
+    border-radius: 13px; background: linear-gradient(135deg, var(--orange), var(--orange-2));
+    color: #fff; font-weight: 800; font-size: 0.98rem; font-family: inherit; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(244,122,31,0.5); transition: transform .12s;
+    animation: pulseGlow 2.2s ease-in-out infinite; }
+  .rb-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
+  .rb-btn:active { transform: scale(0.97); }
   .register-banner.hidden { display: none; }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 6px 20px rgba(244,122,31,0.5); transform: scale(1); }
+    50%      { box-shadow: 0 6px 28px rgba(244,122,31,0.85); transform: scale(1.015); }
+  }
 
   /* ── Install button ── */
   .install { display: none; align-items: center; gap: 0.85rem; width: 100%; padding: 0.9rem 1rem; margin-bottom: 1.5rem;
@@ -395,7 +402,10 @@
       <strong>Hay más ayuda disponible</strong>
       <span>Completa un registro breve para acceder a los tests de bienestar y guías personalizadas.</span>
     </div>
-    <button type="button" class="rb-btn" onclick="requireProfile(function(){ showToast('¡Listo! Ya puedes usar los tests y guías'); })">Completar registro</button>
+    <button type="button" class="rb-btn" onclick="requireProfile(function(){ showToast('¡Listo! Ya puedes usar los tests y guías'); })">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      Completar registro
+    </button>
   </div>
 
   <main id="sections"></main>
@@ -648,8 +658,10 @@ function requireProfile(action){
 }
 function refreshRegisterBanner(){
   const banner = document.getElementById('registerBanner');
-  if (!banner) return;
-  banner.classList.toggle('hidden', isProfileComplete(getProfile()));
+  const sections = document.getElementById('sections');
+  const complete = isProfileComplete(getProfile());
+  if (banner) banner.classList.toggle('hidden', complete);
+  if (sections) sections.style.display = complete ? '' : 'none';
 }
 
 function getProfile(){ try { return JSON.parse(localStorage.getItem(K_PROFILE)) || null; } catch(e){ return null; } }
