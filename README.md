@@ -1,4 +1,4 @@
-# Silva Salud · Apoyo Sísmico (PWA)
+# Portal de Soporte Emocional (PWA)
 
 App web instalable (tipo app) de apoyo emocional ante la crisis sísmica de Venezuela.
 La persona completa un test breve según cómo se siente (ansiedad, cansancio,
@@ -6,7 +6,7 @@ somnolencia, malestar gastrointestinal, etc.), recibe un resultado estimado y
 una guía de orientación con un flyer descargable y compartible.
 
 Basada en los patrones de `linktree-silva` (service worker versionado,
-detección iOS/Android, modo standalone), con la estética navy + naranja de Silva Salud.
+detección iOS/Android, modo standalone), con la estética navy + naranja del portal.
 
 ---
 

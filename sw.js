@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Silva Salud Fatiga — Service Worker
+   Portal de Soporte Emocional — Service Worker
    ▸ SUBÍ ESTE NÚMERO CADA VEZ QUE ACTUALICES LA APP  ◂
    (debe coincidir conceptualmente con APP_VERSION del index.html)
    ═══════════════════════════════════════════════════════════════ */

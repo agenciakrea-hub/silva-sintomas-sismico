@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Silva Salud · Apoyo Sísmico</title>
+<title>Portal de Soporte Emocional</title>
 
-<meta name="description" content="Portal de apoyo emocional ante la crisis sísmica · Silva Salud — Reporta cómo te sientes y recibe orientación de inmediato.">
+<meta name="description" content="Portal de soporte emocional ante la crisis sísmica de Venezuela — Reporta cómo te sientes y recibe orientación de inmediato.">
 
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -15,7 +15,7 @@
 <meta name="theme-color" content="#0a1f40">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Silva Síntomas">
+<meta name="apple-mobile-web-app-title" content="Soporte Emocional">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,600;1,9..40,700&display=swap" rel="stylesheet">
@@ -366,8 +366,8 @@
 <div class="wrap" id="app" style="display:none;">
 
   <header class="hero">
-    <div class="logo-box"><img src="logo.png" alt="Silva Salud"></div>
-    <h1>Silva Salud</h1>
+    <div class="logo-box"><img src="logo.png" alt="Portal de Soporte Emocional"></div>
+    <h1>Portal de Soporte Emocional</h1>
     <p>Ante el terremoto en Venezuela, te acompañamos a manejar tu ansiedad, el estrés y el agotamiento. Toca cómo te sientes y recibirás orientación de inmediato.</p>
   </header>
 
@@ -427,7 +427,7 @@
 
     <button id="installBtn" class="install">
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-      <div class="tx"><span class="tt">Instalar la app</span><span class="ds">Añadir Silva Síntomas a tu inicio</span></div>
+      <div class="tx"><span class="tt">Instalar la app</span><span class="ds">Añadir Portal de Soporte Emocional a tu inicio</span></div>
     </button>
 
     <div class="fbrand">AEROAMBULANCIA SILVA</div>
@@ -1800,7 +1800,7 @@ async function compartirPortal(){
   const url  = 'https://sintomas.aeroambulanciasilva.com';
   const text = 'Portal de apoyo emocional ante la crisis sísmica de Venezuela. Evalúa tu estado y recibe orientación de inmediato.';
   if (navigator.share){
-    try { await navigator.share({ title: 'Silva Salud · Apoyo Sísmico', text, url }); } catch(e){}
+    try { await navigator.share({ title: 'Portal de Soporte Emocional', text, url }); } catch(e){}
     return;
   }
   try {
