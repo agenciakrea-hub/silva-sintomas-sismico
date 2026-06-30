@@ -399,12 +399,12 @@
 
   <div class="register-banner" id="registerBanner">
     <div class="rb-text">
-      <strong>Hay más ayuda disponible</strong>
-      <span>Completa un registro breve para acceder a los tests de bienestar y guías personalizadas.</span>
+      <strong>Hay autoevaluaciones y guías para ti</strong>
+      <span>Carga tus datos personales una sola vez para acceder a los tests de bienestar emocional y guías de orientación personalizadas según cómo te sientes.</span>
     </div>
     <button type="button" class="rb-btn" onclick="requireProfile(function(){ showToast('¡Listo! Ya puedes usar los tests y guías'); })">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-      Completar registro
+      Cargar mis datos y acceder
     </button>
   </div>
 
@@ -657,11 +657,23 @@ function requireProfile(action){
   else openSetup(false);
 }
 function refreshRegisterBanner(){
-  const banner = document.getElementById('registerBanner');
-  const sections = document.getElementById('sections');
   const complete = isProfileComplete(getProfile());
+  const hide = el => { if (el) el.style.display = 'none'; };
+  const show = el => { if (el) el.style.display = ''; };
+  const toggle = (el, visible) => visible ? show(el) : hide(el);
+
+  const banner   = document.getElementById('registerBanner');
+  const sections = document.getElementById('sections');
+  const portalName = document.getElementById('portalName');
+  const footChip = document.querySelector('.foot .profile-chip');
+  const installBtn = document.getElementById('installBtn');
+
   if (banner) banner.classList.toggle('hidden', complete);
-  if (sections) sections.style.display = complete ? '' : 'none';
+  toggle(sections,  complete);
+  toggle(portalName, complete);
+  toggle(footChip,  complete);
+  // installBtn solo se muestra si ya hay perfil Y la app no está instalada aún
+  if (!complete && installBtn) installBtn.style.display = 'none';
 }
 
 function getProfile(){ try { return JSON.parse(localStorage.getItem(K_PROFILE)) || null; } catch(e){ return null; } }
