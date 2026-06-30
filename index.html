@@ -1097,8 +1097,8 @@ function finalizarTest(){
   if (SHEETS_DEPRESION_URL) {
     const p = getProfile() || {};
     const params = new URLSearchParams({
-      nombre:p.nombre||'', id_piloto:p.id_piloto||'', empresa:p.empresa||'', dpto:p.departamento||'',
-      sexo:p.sexo||'', edad:p.edad||'', telefono:p.telefono||''
+      nombre:p.nombre||'', cedula:p.cedula||'', empresa:p.empresa||'', dpto:p.departamento||'',
+      cargo:p.cargo||'', sexo:p.sexo||'', edad:p.edad||'', telefono:p.telefono||''
     });
     testRespuestas.forEach((r, i) => params.set('s'+i, r + ' = ' + TEST_ESCALA[r]));
     fetch(SHEETS_DEPRESION_URL + '?' + params, { mode:'no-cors' }).catch(() => {});
@@ -1277,8 +1277,8 @@ function finalizarPerelli(){
   if (SHEETS_PERELLI_URL) {
     const p = getProfile() || {};
     fetch(SHEETS_PERELLI_URL + '?' + new URLSearchParams({
-      nombre: p.nombre||'', id_piloto: p.id_piloto||'', empresa: p.empresa||'', dpto: p.departamento||'',
-      sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
+      nombre: p.nombre||'', cedula: p.cedula||'', empresa: p.empresa||'', dpto: p.departamento||'',
+      cargo: p.cargo||'', sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
       fase, nivel_fatiga: nivelFatiga, sintomas, funciones,
       calidad_suenio: calidadSuenio, factores, capacidad, comentarios: comentarios||''
     }), { mode:'no-cors' }).catch(() => {});
@@ -1444,13 +1444,14 @@ function finalizarKss(){
     const kssNum = parseInt(nivelAlerta);
     const kssLabel = nivelAlerta.replace(/^\d+ = /, '');
     const params = new URLSearchParams({
-      nombre:     p.nombre       || '',
-      id_piloto:  p.id_piloto    || '',
-      empresa:    p.empresa      || '',
-      dpto:       p.departamento || '',
-      sexo:       p.sexo         || '',
-      edad:       p.edad         || '',
-      telefono:   p.telefono     || '',
+      nombre:   p.nombre       || '',
+      cedula:   p.cedula       || '',
+      empresa:  p.empresa      || '',
+      dpto:     p.departamento || '',
+      cargo:    p.cargo        || '',
+      sexo:     p.sexo         || '',
+      edad:     p.edad         || '',
+      telefono: p.telefono     || '',
       fase:       fase,
       kss:        kssNum + ' = ' + kssLabel,
       suenio:     horasSuenio,
@@ -1507,8 +1508,8 @@ function finalizarEstres(){
   if (SHEETS_ESTRES_URL) {
     const p = getProfile() || {};
     const params = new URLSearchParams({
-      nombre: p.nombre||'', empresa: p.empresa||'', dpto: p.departamento||'',
-      sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
+      nombre: p.nombre||'', cedula: p.cedula||'', empresa: p.empresa||'', dpto: p.departamento||'',
+      cargo: p.cargo||'', sexo: p.sexo||'', edad: p.edad||'', telefono: p.telefono||'',
       s0:ratings[0],  s1:ratings[1],  s2:ratings[2],  s3:ratings[3],
       s4:ratings[4],  s5:ratings[5],  s6:ratings[6],  s7:ratings[7],
       s8:ratings[8],  s9:ratings[9],  s10:ratings[10], s11:ratings[11]
