@@ -672,8 +672,11 @@ function refreshRegisterBanner(){
   toggle(sections,  complete);
   toggle(portalName, complete);
   toggle(footChip,  complete);
-  // installBtn solo se muestra si ya hay perfil Y la app no está instalada aún
-  if (!complete && installBtn) installBtn.style.display = 'none';
+  // installBtn: solo visible con perfil completo, app no instalada y en móvil
+  if (installBtn){
+    if (!complete) installBtn.style.display = 'none';
+    else if (!isStandalone && isMobile) installBtn.style.display = 'flex';
+  }
 }
 
 function getProfile(){ try { return JSON.parse(localStorage.getItem(K_PROFILE)) || null; } catch(e){ return null; } }
@@ -829,17 +832,19 @@ async function descargarFlyer(src){
   }
 }
 async function compartirFlyer(src, titulo){
+  const PORTAL = 'https://sintomas.aeroambulanciasilva.com';
+  const shareText = `${titulo} — extraída del portal de apoyo emocional ante la crisis sísmica de Venezuela.\n\n🔗 Portal de apoyo: ${PORTAL}\n\nOtros links importantes:\n🏥 Familiares en hospitales: https://hospitalesenvenezuela.com\n🔍 Personas desaparecidas: https://redayudavenezuela.com`;
   try {
     const resp = await fetch(src);
     const blob = await resp.blob();
     const file = new File([blob], src, { type: blob.type });
     if (navigator.canShare && navigator.canShare({ files:[file] })){
-      await navigator.share({ files:[file], title: titulo, text: titulo });
+      await navigator.share({ files:[file], title: titulo, text: shareText });
       return;
     }
   } catch(e){}
   if (navigator.share){
-    try { await navigator.share({ title: titulo, url: location.origin + location.pathname.replace(/[^/]*$/, '') + src }); return; } catch(e){}
+    try { await navigator.share({ title: titulo, text: shareText, url: PORTAL }); return; } catch(e){}
   }
   window.open(src, '_blank');
   showToast('Mantén presionada la imagen para compartirla');
@@ -1839,13 +1844,13 @@ const isAndroid = /Android/.test(navigator.userAgent);
 const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 const isMobile = isIOS || isAndroid || window.innerWidth <= 820;
 
-// Botón visible en celular siempre que la app no esté ya instalada
-if (!isStandalone && isMobile) installBtn.style.display = 'flex';
+// Botón visible en celular solo si hay perfil completo y la app no está ya instalada
+if (!isStandalone && isMobile && isProfileComplete(getProfile())) installBtn.style.display = 'flex';
 
 // Android/Chrome: guardamos el instalador nativo cuando el navegador lo ofrece
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault(); deferredPrompt = e;
-  if (!isStandalone) installBtn.style.display = 'flex';
+  if (!isStandalone && isProfileComplete(getProfile())) installBtn.style.display = 'flex';
 });
 installBtn.addEventListener('click', async () => {
   if (deferredPrompt){                                       // Android: instalación nativa (con el logo)
