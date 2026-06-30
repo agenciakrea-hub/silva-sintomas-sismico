@@ -19,10 +19,14 @@ const ASSETS = [
   './flyer-gastro.png'
 ];
 
-// Instala y activa de inmediato la nueva versión
+// Instala y activa de inmediato la nueva versión.
+// addAll es todo-o-nada: si falla un asset secundario (flyer en red mala), bloquea todo.
+// Con Promise.allSettled precacheamos lo que se puede y aun así activamos.
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE).then(cache =>
+      Promise.allSettled(ASSETS.map(url => cache.add(url)))
+    ).then(() => self.skipWaiting())
   );
 });
 
