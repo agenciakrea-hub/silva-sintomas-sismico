@@ -1,12 +1,11 @@
-# Silva Salud Fatiga — Mini App (PWA)
+# Silva Salud · Apoyo Sísmico (PWA)
 
-App web instalable (tipo app) para el reporte de fatiga de empleados.
-Cada botón abre WhatsApp con un mensaje prearmado dirigido a **EVA** (la IA), ya
-identificado con el nombre y la empresa del empleado. La app marca qué se reportó
-hoy (con hora), se reinicia sola al cambiar el día y permite deshacer un reporte
-hecho por error.
+App web instalable (tipo app) de apoyo emocional ante la crisis sísmica de Venezuela.
+La persona completa un test breve según cómo se siente (ansiedad, cansancio,
+somnolencia, malestar gastrointestinal, etc.), recibe un resultado estimado y
+una guía de orientación con un flyer descargable y compartible.
 
-Basada en los patrones del repo `linktree-silva` (service worker versionado,
+Basada en los patrones de `linktree-silva` (service worker versionado,
 detección iOS/Android, modo standalone), con la estética navy + naranja de Silva Salud.
 
 ---
@@ -15,63 +14,30 @@ detección iOS/Android, modo standalone), con la estética navy + naranja de Sil
 
 | Archivo | Qué es |
 |---|---|
-| `index.html` | La app completa (interfaz + lógica). |
-| `manifest.json` | Configura la instalación: nombre "Silva Salud Fatiga", iconos, colores. |
+| `index.html` | La app completa (interfaz + lógica + los 8 tests). |
+| `manifest.json` | Configura la instalación: nombre, iconos, colores. |
 | `sw.js` | Service worker. Maneja la caché y la auto-actualización. |
-| `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png` | Iconos de la app. |
+| `icon-192.png`, `icon-512.png` | Iconos de la app. |
 | `logo.png` | Logo blanco usado dentro del encabezado. |
+| `flyer-emergencia.png` | Flyer de la Guía de Emergencia (ansiedad, estrés). |
+| `flyer-energia.png` | Flyer de la Guía para la Recuperación de Energía (cansancio, fatiga). |
+| `flyer-recuperacion.png` | Flyer de la Guía de Recuperación (somnolencia, depresión). |
+| `flyer-gastro.png` | Flyer de la Guía de Alivio Gastrointestinal (gastro, malestar). |
 | `CNAME` | El subdominio donde vive la app. |
 
 ---
 
-## 1) Publicar por primera vez (con GitBash)
+## Actualizar la app (¡importante para que no quede caché vieja!)
 
-> Asumimos que querés un repo **nuevo** llamado `fatiga-silva` en la cuenta `agenciakrea-hub`.
+Cada vez que cambies algo en `index.html`, subí el número de versión en `sw.js`
+para forzar que todos los dispositivos con la app instalada reciban la actualización:
 
-1. Creá el repositorio vacío en GitHub: https://github.com/new
-   - Owner: `agenciakrea-hub` · Name: `fatiga-silva` · **Public** · sin README.
+```js
+// sw.js, línea superior
+const VERSION = 'v1';   // ← cambialo: v2, v3, etc.
+```
 
-2. Abrí **GitBash** dentro de la carpeta `fatiga-silva` (la que contiene estos archivos)
-   y pegá, línea por línea:
-
-   ```bash
-   git init
-   git add .
-   git commit -m "Silva Salud Fatiga v1"
-   git branch -M main
-   git remote add origin https://github.com/agenciakrea-hub/fatiga-silva.git
-   git push -u origin main
-   ```
-
-3. En GitHub → repo `fatiga-silva` → **Settings → Pages**:
-   - *Source*: `Deploy from a branch`
-   - *Branch*: `main` / `/ (root)` → **Save**.
-
-4. **Custom domain**: ya incluimos el archivo `CNAME` con `fatiga.aeroambulanciasilva.com`.
-   - Si querés OTRO subdominio, editá `CNAME` y poné el que prefieras (una sola línea).
-   - En tu proveedor de DNS, creá un registro **CNAME**:
-     `fatiga`  →  `agenciakrea-hub.github.io`
-   - Volvé a Settings → Pages y tildá **Enforce HTTPS** (puede tardar unos minutos).
-
-Listo: la app queda en `https://fatiga.aeroambulanciasilva.com`.
-
----
-
-## 2) Actualizar la app (¡importante para que no quede caché vieja!)
-
-Cada vez que cambies algo, subí el número de versión en **dos** lugares para que
-todos los dispositivos reciban la actualización automáticamente:
-
-1. En `index.html`, arriba del todo del `<script>`:
-   ```js
-   const APP_VERSION = '1.0';   // ← cambialo: 1.1, 1.2, etc.
-   ```
-2. En `sw.js`, línea superior:
-   ```js
-   const VERSION = 'v1';        // ← cambialo: v2, v3, etc.
-   ```
-
-Después, en GitBash dentro de la carpeta:
+Después:
 
 ```bash
 git add .
@@ -79,27 +45,30 @@ git commit -m "Actualización vX"
 git push
 ```
 
-El número que se ve abajo en la app ("Versión 1.0") sale de `APP_VERSION`, así sabés
-en qué versión está cada empleado. Cuando cambia `VERSION` en `sw.js`, los celulares
-detectan la nueva versión, refrescan solos y muestran lo nuevo sin borrar nada a mano.
+Cuando cambia `VERSION`, los celulares con la PWA instalada detectan el cambio,
+descargan la versión nueva en segundo plano y la activan solos, sin que el
+usuario tenga que hacer nada.
 
 ---
 
-## Cómo funciona para el empleado
+## Cómo funciona para el usuario
 
-1. Entra al link, lo instala (botón "Instalar la app" en Android; en iPhone aparecen
-   las instrucciones de "Agregar a inicio").
-2. La primera vez completa **Nombre y apellido** + **Empresa**. Se guardan en su
-   teléfono (no se envían a ningún servidor). Puede editarlos con el botón **Editar**.
-3. Toca un botón (ej. "Saliendo de casa", "Cansancio") → se abre WhatsApp con el
-   mensaje ya escrito hacia EVA → lo envía.
-4. El botón queda marcado en verde con la hora. Al día siguiente se reinicia solo.
-   Si lo tocó por error, usa **"Marcar como no enviado"** para quitar la marca.
+1. Entra al link, acepta el consentimiento, completa su perfil (nombre, cédula,
+   sexo, edad, teléfono — empresa/depto/cargo son opcionales).
+2. Toca un botón de sensación (ej. "Cansancio", "Ansiedad") → se abre el test
+   correspondiente paso a paso.
+3. Al terminar, ve una **tarjeta de resultado** (severidad estimada por rangos)
+   y un botón "Registrar y ver guía".
+4. Se abre la guía: arriba el **flyer en imagen** (se puede ampliar, descargar
+   o compartir) y, al scrollear, el texto de orientación completo.
+5. Las respuestas se envían a Google Sheets vía Apps Script (no a EVA / WhatsApp).
 
 ---
 
 ## Datos de configuración (dentro de `index.html`)
 
-- WhatsApp de EVA: `584129089379` (constante `EVA_PHONE`).
-- Botones y textos de los mensajes: array `SECTIONS`. Ahí podés editar etiquetas,
-  descripciones y el texto exacto que se envía a EVA.
+- Botones y textos: array `SECTIONS`.
+- Mapeo de qué flyer/guía corresponde a cada sensación: `ITEM_CATEGORY`.
+- Contenido de cada guía (título, imagen, texto): `FLYER_SCREEN`.
+- URLs de los webhooks de Google Sheets: constantes `SHEETS_*_URL`.
+- Contacto de emergencia médica (WhatsApp): buscar `584241466595`.
