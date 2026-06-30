@@ -187,9 +187,11 @@
   .ig-copy-btn { width: 100%; padding: 0.75rem; background: var(--orange);
     border: none; border-radius: 12px; color: #fff; font-weight: 800; font-size: 0.9rem;
     font-family: inherit; cursor: pointer; animation: pulseGlow 2.2s ease-in-out infinite; }
-  .ig-dismiss-btn { width: 100%; padding: 0.65rem; background: rgba(255,255,255,0.07);
+  .ig-hint { font-size: 0.74rem; color: rgba(255,255,255,0.45); text-align: center; margin-top: -0.3rem; }
+  .ig-dismiss-btn { width: 100%; padding: 0.65rem 0.5rem; background: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
-    color: rgba(255,255,255,0.5); font-size: 0.82rem; font-family: inherit; cursor: pointer; }
+    color: rgba(255,255,255,0.5); font-size: 0.82rem; font-family: inherit; cursor: pointer; line-height: 1.4; }
+  .ig-dismiss-btn span { display: block; font-size: 0.7rem; color: rgba(255,255,255,0.3); }
   @keyframes pulseGlow {
     0%, 100% { box-shadow: 0 6px 20px rgba(244,122,31,0.5); transform: scale(1); }
     50%      { box-shadow: 0 6px 28px rgba(244,122,31,0.85); transform: scale(1.015); }
@@ -393,16 +395,18 @@
 
 <div id="igOverlay">
   <div id="igBanner">
-    <p class="ig-titulo">📲 ¡Instalá esta herramienta <span>gratis</span> en tu celular!</p>
-    <p class="ig-aviso">Estás en el visor de Instagram. Algunas funciones no están disponibles aquí: no podés instalar la app ni descargar los flyers. La experiencia completa es desde Safari, Chrome o con la app instalada.</p>
-    <p class="ig-subtitulo">Para salir del visor</p>
+    <p class="ig-titulo">📲 Usá esta herramienta <span>gratis al 100%</span></p>
+    <p class="ig-aviso">Estás en el visor de Instagram — para acceder a todas las funciones (descargar flyers, instalar la app y usarla sin internet) tenés que salir de este visor y abrirlo en tu navegador.</p>
+    <p class="ig-subtitulo">Cómo salir del visor de Instagram</p>
     <ul class="ig-pasos">
-      <li>Tocá <strong>···</strong> arriba a la derecha en Instagram</li>
-      <li>Elegí <strong>"Abrir en Safari"</strong> (iPhone) o <strong>"Abrir en Chrome"</strong> (Android)</li>
+      <li>Tocá <strong>···</strong> arriba a la derecha</li>
+      <li>En iPhone: elegí <strong>"Abrir en Safari"</strong></li>
+      <li>En Android: elegí <strong>"Abrir en Chrome"</strong></li>
     </ul>
     <p class="ig-o">O podés</p>
     <button class="ig-copy-btn" onclick="copiarEnlaceIG()">Copiar enlace del portal</button>
-    <button class="ig-dismiss-btn" onclick="cerrarIgBanner()">Ver desde Instagram de todos modos</button>
+    <p class="ig-hint">e ir a tu navegador y abrirlo</p>
+    <button class="ig-dismiss-btn" onclick="cerrarIgBanner()">Ver desde Instagram de todos modos <span>(no recomendado, experiencia incompleta)</span></button>
   </div>
 </div>
 
@@ -627,7 +631,7 @@
 
 <script>
 /* ════════════════ CONFIG ════════════════ */
-const APP_VERSION = '5.3';
+const APP_VERSION = '5.4';
 const isInstagramBrowser = /Instagram/.test(navigator.userAgent);                  // ← Subí este número en cada actualización
 const LINK_TRYVITAL = 'https://link.tryvital.io/?token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImM1Y2E4OGEyMzQxZDQ1M2U0MzU1YTIzZjNiOTZhNWEzMjdjOTY3NDciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiAiaWQtc2lnbmVyLXN0Zy11c0B2aXRhbC1pZC1zdGctdXMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAiYXVkIjogImh0dHBzOi8vYXBpLnNhbmRib3gudHJ5dml0YWwuaW8vdjIvbGluayIsICJpYXQiOiAxNzc5ODM5OTMwLCAiZXhwIjogMTc3OTg0MzUzMCwgInN1YiI6ICJhMThlYTYyMi1mNWMzLTRjZjMtYTc4YS1lZWQxMTM2MzNhZjciLCAidXNlcl9pZCI6ICI5NDhmMTEyNy02OWFiLTQ0MGUtOWRiOS1iN2ZlYTNjZDg1NGMiLCAidGVhbV9pZCI6ICJkMjQ1NTMxNC03YzAxLTRkZGUtYTVhMy0wODg4ZGMwNTJhN2UifQ.J5LDp87fJjSUv9mdmK4HVx3R8GqfnQgk9ue3osPVTR7U2kGszk0IWhmpzufoeW_yViurWjkK71dZzUuJuu1iLBHjy9xKD8IrUvqrTAFKkCtP7cCnKB9ZzwCyugfg8liNsDrx7oXFKGpyLcmeQMrR5rez4nHQC8M8Gqh7nKz3QGcX3wSsQK3U0MBpz4_NLnXYJNwM6zfM2vpmUkyfn7-tpTDZ5YqIrPR4-0rac4p5UXkNQ475a3UWWSG8oMwNN7n_J3sYCwwV1l4JDypIzuDTZsdyU5NVOoljEnFSzqC5an-XQU1CDzALs6UPNpRr-m4RjKYxMDpEPDsPw7njwooZOw&env=sandbox&region=us'; // Link de vinculación TryVital (wearables)
 
