@@ -3,7 +3,7 @@
    ▸ SUBÍ ESTE NÚMERO CADA VEZ QUE ACTUALICES LA APP  ◂
    (debe coincidir conceptualmente con APP_VERSION del index.html)
    ═══════════════════════════════════════════════════════════════ */
-const VERSION = 'v4';;
+const VERSION = 'v5';
 const CACHE = 'silva-sintomas-' + VERSION;
 
 const ASSETS = [

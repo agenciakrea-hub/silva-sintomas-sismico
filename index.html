@@ -162,6 +162,21 @@
   .rb-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
   .rb-btn:active { transform: scale(0.97); }
   .register-banner.hidden { display: none; }
+
+  /* ── Banner visor Instagram ── */
+  #igBanner { position: fixed; top: 0; left: 0; right: 0; z-index: 2100;
+    background: #0a1f40; border-bottom: 2.5px solid var(--orange);
+    padding: 0.8rem 1rem; display: none; flex-direction: column; gap: 0.55rem; }
+  #igBanner .ig-msg { font-size: 0.79rem; color: rgba(255,255,255,0.92); line-height: 1.5; }
+  #igBanner .ig-msg strong { color: var(--orange); }
+  #igBanner .ig-actions { display: flex; gap: 0.5rem; }
+  .ig-copy-btn { flex: 1; padding: 0.5rem 0.7rem; background: var(--orange);
+    border: none; border-radius: 9px; color: #fff; font-weight: 700; font-size: 0.8rem;
+    font-family: inherit; cursor: pointer; }
+  .ig-close-btn { padding: 0.5rem 0.9rem; background: rgba(255,255,255,0.1);
+    border: none; border-radius: 9px; color: rgba(255,255,255,0.75); font-size: 0.85rem;
+    font-family: inherit; cursor: pointer; }
+  body.has-ig-banner .wrap { padding-top: 6rem; }
   @keyframes pulseGlow {
     0%, 100% { box-shadow: 0 6px 20px rgba(244,122,31,0.5); transform: scale(1); }
     50%      { box-shadow: 0 6px 28px rgba(244,122,31,0.85); transform: scale(1.015); }
@@ -362,6 +377,14 @@
 </style>
 </head>
 <body>
+
+<div id="igBanner">
+  <p class="ig-msg">📲 Estás viendo esto desde <strong>Instagram</strong>. Para instalar la app o descargar los flyers, abrilo en tu navegador: toca <strong>···</strong> arriba a la derecha → <strong>Abrir en Safari / Abrir en Chrome</strong>.</p>
+  <div class="ig-actions">
+    <button class="ig-copy-btn" onclick="copiarEnlaceIG()">Copiar enlace del portal</button>
+    <button class="ig-close-btn" onclick="cerrarIgBanner()">✕</button>
+  </div>
+</div>
 
 <div class="wrap" id="app" style="display:none;">
 
@@ -584,7 +607,8 @@
 
 <script>
 /* ════════════════ CONFIG ════════════════ */
-const APP_VERSION = '4.0';                  // ← Subí este número en cada actualización
+const APP_VERSION = '5.0';
+const isInstagramBrowser = /Instagram/.test(navigator.userAgent);                  // ← Subí este número en cada actualización
 const LINK_TRYVITAL = 'https://link.tryvital.io/?token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImM1Y2E4OGEyMzQxZDQ1M2U0MzU1YTIzZjNiOTZhNWEzMjdjOTY3NDciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiAiaWQtc2lnbmVyLXN0Zy11c0B2aXRhbC1pZC1zdGctdXMuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAiYXVkIjogImh0dHBzOi8vYXBpLnNhbmRib3gudHJ5dml0YWwuaW8vdjIvbGluayIsICJpYXQiOiAxNzc5ODM5OTMwLCAiZXhwIjogMTc3OTg0MzUzMCwgInN1YiI6ICJhMThlYTYyMi1mNWMzLTRjZjMtYTc4YS1lZWQxMTM2MzNhZjciLCAidXNlcl9pZCI6ICI5NDhmMTEyNy02OWFiLTQ0MGUtOWRiOS1iN2ZlYTNjZDg1NGMiLCAidGVhbV9pZCI6ICJkMjQ1NTMxNC03YzAxLTRkZGUtYTVhMy0wODg4ZGMwNTJhN2UifQ.J5LDp87fJjSUv9mdmK4HVx3R8GqfnQgk9ue3osPVTR7U2kGszk0IWhmpzufoeW_yViurWjkK71dZzUuJuu1iLBHjy9xKD8IrUvqrTAFKkCtP7cCnKB9ZzwCyugfg8liNsDrx7oXFKGpyLcmeQMrR5rez4nHQC8M8Gqh7nKz3QGcX3wSsQK3U0MBpz4_NLnXYJNwM6zfM2vpmUkyfn7-tpTDZ5YqIrPR4-0rac4p5UXkNQ475a3UWWSG8oMwNN7n_J3sYCwwV1l4JDypIzuDTZsdyU5NVOoljEnFSzqC5an-XQU1CDzALs6UPNpRr-m4RjKYxMDpEPDsPw7njwooZOw&env=sandbox&region=us'; // Link de vinculación TryVital (wearables)
 
 // Iconos SVG reutilizables
@@ -674,7 +698,7 @@ function refreshRegisterBanner(){
   toggle(footChip,  complete);
   // installBtn: solo visible con perfil completo, app no instalada y en móvil
   if (installBtn){
-    if (!complete) installBtn.style.display = 'none';
+    if (!complete || isInstagramBrowser) installBtn.style.display = 'none';
     else if (!isStandalone && isMobile) installBtn.style.display = 'flex';
   }
 }
@@ -818,7 +842,25 @@ function abrirLightbox(src){
 function cerrarLightbox(){
   document.getElementById('lightboxOverlay').classList.remove('show');
 }
+function cerrarIgBanner(){
+  document.getElementById('igBanner').style.display = 'none';
+  document.body.classList.remove('has-ig-banner');
+}
+async function copiarEnlaceIG(){
+  const url = 'https://sintomas.aeroambulanciasilva.com';
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast('Enlace copiado — pégalo en Safari o Chrome para abrir el portal completo');
+  } catch(e){
+    showToast('Enlace: sintomas.aeroambulanciasilva.com — cópialo y ábrelo en tu navegador');
+  }
+}
 async function descargarFlyer(src){
+  if (isInstagramBrowser){
+    window.open(src, '_blank');
+    showToast('Mantén presionada la imagen para guardarla en tu galería');
+    return;
+  }
   try {
     const resp = await fetch(src);
     const blob = await resp.blob();
@@ -834,6 +876,15 @@ async function descargarFlyer(src){
 async function compartirFlyer(src, titulo){
   const PORTAL = 'https://sintomas.aeroambulanciasilva.com';
   const shareText = `${titulo} — extraída del portal de apoyo emocional ante la crisis sísmica de Venezuela.\n\n🔗 Portal de apoyo: ${PORTAL}\n\nOtros links importantes:\n🏥 Familiares en hospitales: https://hospitalesenvenezuela.com\n🔍 Personas desaparecidas: https://redayudavenezuela.com`;
+  if (isInstagramBrowser){
+    try {
+      await navigator.clipboard.writeText(PORTAL);
+      showToast('Enlace copiado — pégalo en tu navegador para compartir el portal');
+    } catch(e){
+      showToast('Copia el enlace: sintomas.aeroambulanciasilva.com');
+    }
+    return;
+  }
   try {
     const resp = await fetch(src);
     const blob = await resp.blob();
@@ -1844,13 +1895,13 @@ const isAndroid = /Android/.test(navigator.userAgent);
 const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 const isMobile = isIOS || isAndroid || window.innerWidth <= 820;
 
-// Botón visible en celular solo si hay perfil completo y la app no está ya instalada
-if (!isStandalone && isMobile && isProfileComplete(getProfile())) installBtn.style.display = 'flex';
+// Botón visible en celular solo si hay perfil completo, app no instalada y NO es visor de IG
+if (!isInstagramBrowser && !isStandalone && isMobile && isProfileComplete(getProfile())) installBtn.style.display = 'flex';
 
 // Android/Chrome: guardamos el instalador nativo cuando el navegador lo ofrece
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault(); deferredPrompt = e;
-  if (!isStandalone && isProfileComplete(getProfile())) installBtn.style.display = 'flex';
+  if (!isInstagramBrowser && !isStandalone && isProfileComplete(getProfile())) installBtn.style.display = 'flex';
 });
 installBtn.addEventListener('click', async () => {
   if (deferredPrompt){                                       // Android: instalación nativa (con el logo)
@@ -1873,6 +1924,12 @@ window.addEventListener('appinstalled', () => { installBtn.style.display = 'none
 _fontStepIdx = getFontStepIdx(); applyFontStep(_fontStepIdx);
 document.getElementById('verTag').textContent = 'Versión ' + APP_VERSION;
 document.getElementById('app').style.display = 'block';
+
+// Visor de Instagram: mostrar banner de advertencia
+if (isInstagramBrowser){
+  const igBanner = document.getElementById('igBanner');
+  if (igBanner){ igBanner.style.display = 'flex'; document.body.classList.add('has-ig-banner'); }
+}
 
 const _prof = getProfile();
 renderSections();
