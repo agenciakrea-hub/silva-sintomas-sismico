@@ -3,7 +3,7 @@
    ▸ SUBÍ ESTE NÚMERO CADA VEZ QUE ACTUALICES LA APP  ◂
    (debe coincidir conceptualmente con APP_VERSION del index.html)
    ═══════════════════════════════════════════════════════════════ */
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = 'silva-sintomas-' + VERSION;
 
 const ASSETS = [
@@ -11,8 +11,12 @@ const ASSETS = [
   './index.html',
   './manifest.json',
   './logo.png',
-  './ic192v2.png',
-  './ic512v2.png'
+  './icon-192.png',
+  './icon-512.png',
+  './flyer-emergencia.png',
+  './flyer-energia.png',
+  './flyer-recuperacion.png',
+  './flyer-gastro.png'
 ];
 
 // Instala y activa de inmediato la nueva versión
